@@ -1,0 +1,301 @@
+<div class="page-container">
+
+    <!-- BREADCRUMBS -->
+    <div class="breadcrumbs">
+        <a href="/">Home</a>
+        <span>/</span>
+        <span><%= page.title %></span>
+    </div>
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <h1><%= page.title %></h1>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="page-content">
+        <%- page.content %>
+    </div>
+
+    <!-- SHARE -->
+    <div class="page-share">
+        <p>Share this page</p>
+
+        <div class="share-buttons">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=<%= encodeURIComponent(currentUrl) %>" target="_blank">
+              Facebook
+          </a>
+      
+          <a href="https://twitter.com/intent/tweet?url=<%= encodeURIComponent(currentUrl) %>" target="_blank">
+              Twitter
+          </a>
+      
+          <a href="https://wa.me/?text=<%= encodeURIComponent(page.title + ' ' + currentUrl) %>" target="_blank">
+              WhatsApp
+          </a>
+      </div>
+    </div>
+    
+</div>
+
+
+<style>
+/* CONTAINER */
+.page-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/* HEADER */
+.page-header h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+/* CONTENT BASE */
+.page-content {
+    line-height: 1.8;
+    color: #ccc;
+    font-size: 16px;
+}
+
+/* HEADINGS */
+.page-content h1,
+.page-content h2,
+.page-content h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.page-content h2 {
+    font-size: 24px;
+}
+
+.page-content h3 {
+    font-size: 20px;
+}
+
+/* PARAGRAPHS */
+.page-content p {
+    margin-bottom: 15px;
+}
+
+/* LINKS */
+.page-content a {
+    color: #DFFF00;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.page-content a:hover {
+    color: #fff;
+}
+
+/* LISTS */
+.page-content ul,
+.page-content ol {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.page-content li {
+    margin-bottom: 8px;
+}
+
+/* IMAGES */
+.page-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+/* TABLE */
+.page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.page-content table th,
+.page-content table td {
+    border: 1px solid #333;
+    padding: 10px;
+}
+
+.page-content table th {
+    background: #111;
+}
+
+/* BLOCKQUOTE */
+.page-content blockquote {
+    border-left: 4px solid #DFFF00;
+    padding-left: 15px;
+    color: #aaa;
+    margin: 20px 0;
+}
+
+/* CODE BLOCK */
+.page-content pre {
+    background: #0b0b0b;
+    padding: 15px;
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.page-content code {
+    color: #DFFF00;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .page-container {
+        padding: 20px 15px;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .page-content {
+        font-size: 15px;
+    }
+
+}
+
+.page-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/* breadcrumbs */
+.breadcrumbs {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #888;
+}
+
+.breadcrumbs a {
+    color: #DFFF00;
+    text-decoration: none;
+}
+
+.breadcrumbs span {
+    margin: 0 5px;
+}
+
+/* header */
+.page-header h1 {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.page-meta {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* share */
+.page-share {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+}
+
+.share-buttons a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 14px;
+    background: #111;
+    border-radius: 6px;
+    color: #DFFF00;
+    text-decoration: none;
+}
+
+.share-buttons a:hover {
+    background: #DFFF00;
+    color: #000;
+}
+
+/* Share */
+.page-share {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #222;
+}
+
+.share-buttons a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 14px;
+  background: #111;
+  border-radius: 6px;
+  color: #DFFF00;
+  text-decoration: none;
+}
+
+.share-buttons a:hover {
+  background: #DFFF00;
+  color: #000;
+}
+
+/* Responsive Design */
+
+/* Tablets and small desktops (768px - 991px) */
+@media (max-width: 991px) {
+  .page-share {
+    margin-top: 30px;
+    padding-top: 15px;
+  }
+  .share-buttons a {
+    margin-right: 8px;
+    padding: 6px 12px;
+  }
+}
+
+/* Mobile devices (576px - 767px) */
+@media (max-width: 767px) {
+  .page-share {
+    margin-top: 20px;
+    padding-top: 10px;
+  }
+  .share-buttons a {
+    margin-right: 6px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+}
+
+/* Small screens (320px - 575px) */
+@media (max-width: 575px) {
+  .page-share {
+    margin-top: 15px;
+    padding-top: 5px;
+  }
+  .share-buttons a {
+    margin-right: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+/* Very small screens (max-width: 319px) */
+@media (max-width: 319px) {
+  .page-share {
+    margin-top: 10px;
+    padding-top: 0;
+  }
+  .share-buttons a {
+    margin-right: 2px;
+    padding: 2px 4px;
+    font-size: 10px;
+  }
+}
+
+</style>

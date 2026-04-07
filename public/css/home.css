@@ -1,0 +1,812 @@
+/* ===============================
+   HERO SECTION
+================================ */
+.hero-section {
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+    /* Card size */
+  width: 100%;            /* full width in its grid column */
+  max-width: 250px;       /* desktop max width */
+  height: auto;           /* height adapts to image + info */
+  margin: 0 auto;         /* center if column is wider */
+}
+
+/* image */
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ===============================
+   RESPONSIVE HEIGHT CONTROL
+================================ */
+
+/* small phones */
+@media (max-width: 480px) {
+  .hero-section {
+    border-radius: 5px;
+    margin-bottom: 16px;
+  }
+}
+
+/* tablets */
+@media (min-width: 600px) {
+  .hero-section {
+    margin-bottom: 20px;
+  }
+}
+
+/* laptops */
+@media (min-width: 900px) {
+  .hero-section {
+    margin-bottom: 24px;
+  }
+}
+
+/* large screens */
+@media (min-width: 1400px) {
+  .hero-section {
+    margin-bottom: 28px;
+  }
+}
+
+
+
+
+
+
+/* ===============================
+   SONG CARD
+================================ */
+.card.song {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  background: #111;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: 0.25s ease;
+  /* Card size */
+  width: 100%;            /* full width in its grid column */
+  max-width: 250px;       /* desktop max width */
+  height: auto;           /* height adapts to image + info */
+  margin: 0 auto;         /* center if column is wider */
+}
+
+.card.song:hover {
+  transform: translateY(-4px);
+  background: #181818;
+}
+
+/* ===============================
+   IMAGE
+================================ */
+.card-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===============================
+   PLAY OVERLAY
+================================ */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.2s ease;
+}
+
+.card.song:hover .play-overlay {
+  opacity: 1;
+}
+
+/* ===============================
+   PLAY BUTTON
+================================ */
+.play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #DFFF00;
+  color: #000;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ===============================
+   EQUALIZER (hidden by default)
+================================ */
+.card-equalizer {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: none;
+  gap: 2px;
+}
+
+.card-equalizer span {
+  width: 3px;
+  height: 10px;
+  background: #DFFF00;
+  animation: equalize 1s infinite ease-in-out;
+}
+
+.card-equalizer span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.card-equalizer span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes equalize {
+  0%,100% { height: 6px; }
+  50% { height: 14px; }
+}
+
+/* ===============================
+   NO AUDIO
+================================ */
+.no-audio {
+  font-size: 12px;
+  background: rgba(0,0,0,0.6);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* ===============================
+   CARD INFO
+================================ */
+.card-info {
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-subtitle {
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===============================
+   RESPONSIVE TUNING
+================================ */
+
+/* small phones */
+@media (max-width: 400px) {
+  .card-title {
+    font-size: 13px;
+  }
+}
+
+/* large desktop */
+@media (min-width: 1400px) {
+  .card-title {
+    font-size: 15px;
+  }
+
+  .card-subtitle {
+    font-size: 13px;
+  }
+}
+
+
+
+
+
+
+
+/* ===============================
+   ARTIST CARD
+================================ */
+.artist-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  padding: 10px;
+  transition: 0.2s ease;
+  /* Card size */
+  width: 100%;            /* full width in its grid column */
+  max-width: 250px;       /* desktop max width */
+  height: auto;           /* height adapts to image + info */
+  margin: 0 auto;         /* center if column is wider */
+}
+
+.artist-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ===============================
+   CIRCULAR IMAGE
+================================ */
+.artist-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #111;
+  border: 2px solid #222;
+  transition: 0.2s ease;
+}
+
+.artist-card:hover .artist-image {
+  border-color: #DFFF00;
+}
+
+.artist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===============================
+   NAME
+================================ */
+.artist-name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* small phones */
+@media (max-width: 400px) {
+  card-info {
+    padding: 6px;
+  }
+  
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .card-subtitle {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .artist-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .artist-name {
+    font-size: 13px;
+  }
+}
+
+/* tablets */
+@media (min-width: 600px) {
+  .artist-image {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* laptops */
+@media (min-width: 900px) {
+  .artist-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* large screens */
+@media (min-width: 1400px) {
+  .artist-image {
+    width: 110px;
+    height: 110px;
+  }
+
+  .artist-name {
+    font-size: 15px;
+  }
+}
+
+
+
+
+
+
+/* ===============================
+   ALBUM CARD
+================================ */
+.album-card {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  transition: 0.25s ease;
+}
+
+.album-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ===============================
+   STACKED COVER
+================================ */
+.album-stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 10px;
+}
+
+/* main cover */
+.album-cover.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  z-index: 2;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+}
+
+/* back cover */
+.album-cover.back {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  z-index: 1;
+  opacity: 0.4;
+  transform: scale(0.95);
+}
+
+/* hover animation */
+.album-card:hover .album-cover.main {
+  transform: rotate(-2deg) scale(1.02);
+}
+
+.album-card:hover .album-cover.back {
+  transform: rotate(3deg) scale(0.95);
+}
+
+/* ===============================
+   INFO
+================================ */
+.album-info {
+  padding: 4px 2px;
+}
+
+.album-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album-artist {
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* small phones */
+@media (max-width: 400px) {
+  .album-title {
+    font-size: 13px;
+  }
+}
+
+/* large screens */
+@media (min-width: 1400px) {
+  .album-title {
+    font-size: 15px;
+  }
+
+  .album-artist {
+    font-size: 13px;
+  }
+}
+
+
+
+
+
+
+/* ===============================
+   GENRES SECTION
+================================ */
+.genres-section {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.genres-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* ===============================
+   GENRES GRID
+================================ */
+.genres-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ===============================
+   GENRE ITEM
+================================ */
+.genres-list li a {
+  display: block;
+  padding: 10px 14px;
+  background: #111;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  transition: 0.2s ease;
+  border: 1px solid #222;
+}
+
+.genres-list li a:hover {
+  background: #DFFF00;
+  color: #000;
+  border-color: #DFFF00;
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* small phones */
+@media (max-width: 400px) {
+  .genres-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* tablets */
+@media (min-width: 600px) {
+  .genres-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+/* desktops */
+@media (min-width: 1000px) {
+  .genres-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+
+
+
+
+
+
+/* ===============================
+   NEWS SECTION
+================================ */
+.news-section {
+  margin-top: 28px;
+  margin-bottom: 28px;
+}
+
+/* ===============================
+   GRID
+================================ */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* ===============================
+   CARD
+================================ */
+.news-card {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  background: #0f0f0f;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #1c1c1c;
+  transition: 0.25s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-3px);
+  border-color: #DFFF00;
+}
+
+/* ===============================
+   IMAGE
+================================ */
+.news-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.news-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===============================
+   CONTENT
+================================ */
+.news-content {
+  padding: 12px 14px 14px;
+}
+
+.news-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.news-excerpt {
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1.4;
+}
+
+/* ===============================
+   TABLET
+================================ */
+@media (min-width: 600px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .news-title {
+    font-size: 15px;
+  }
+
+  .news-excerpt {
+    font-size: 13px;
+  }
+}
+
+/* ===============================
+   DESKTOP
+================================ */
+@media (min-width: 1000px) {
+  .news-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ===============================
+   LARGE SCREENS
+================================ */
+@media (min-width: 1400px) {
+  .news-grid {
+    gap: 20px;
+  }
+
+  .news-title {
+    font-size: 16px;
+  }
+}
+
+
+
+
+
+
+
+
+/* ==============================
+   Home Page Sections & Grids
+   ============================== */
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Section Block */
+.section-block {
+  margin-bottom: 50px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 0;
+}
+
+.section-header .more-link {
+  color: #DFFF00;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.section-header .more-link:hover {
+  color: #fff;
+}
+
+/* Grid Layouts */
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* Songs Grid */
+.songs-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Artists Grid */
+.artists-grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* Albums Grid */
+.albums-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ==============================
+   Responsive Layouts
+   ============================== */
+
+/* Large desktops */
+@media (max-width: 1200px) {
+  .songs-grid,
+  .albums-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .artists-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tablets */
+@media (max-width: 991px) {
+  .songs-grid,
+  .albums-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .artists-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .section-header h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 767px) {
+  .songs-grid,
+  .albums-grid,
+  .artists-grid {
+    grid-template-columns: repeat(5, 1fr); /* 3 columns on mobile as requested */
+  }
+  .section-block {
+    margin-bottom: 30px;
+  }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .section-header .more-link {
+    margin-top: 8px;
+  }
+  .section-header h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Small screens */
+@media (max-width: 575px) {
+  .songs-grid,
+  .albums-grid,
+  .artists-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 375px) {
+  .songs-grid,
+  .albums-grid,
+  .artists-grid {
+    grid-template-columns: repeat(3, 1fr;
+    gap: 10px;
+  }
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+  .section-header .more-link {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,106 @@
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h2>📄 Pages</h2>
+        <p>Manage website pages (About, Contact, Help, Privacy)</p>
+    </div>
+
+    <div class="admin-card">
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Status</th>
+                    <th>Last Updated</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% if (pages && pages.length > 0) { %>
+
+                    <% pages.forEach(page => { %>
+                        <tr>
+                            <td><%= page.title %></td>
+                            <td><%= page.slug %></td>
+
+                            <td>
+                                <% if(page.status === "published") { %>
+                                    <span class="status published">Published</span>
+                                <% } else { %>
+                                    <span class="status draft">Draft</span>
+                                <% } %>
+                            </td>
+
+                            <td>
+                                <%= new Date(page.updatedAt).toLocaleDateString() %>
+                            </td>
+
+                            <td>
+                                <a href="/admin/pages/edit/<%= page._id %>" class="btn-edit">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+
+                <% } else { %>
+
+                    <tr>
+                        <td colspan="5" class="empty">
+                            No pages found
+                        </td>
+                    </tr>
+
+                <% } %>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<style>
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 12px;
+    background: #111;
+}
+
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #222;
+}
+
+.status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status.published {
+    background: #1db954;
+    color: #000;
+}
+
+.status.draft {
+    background: #555;
+    color: #fff;
+}
+
+.btn-edit {
+    background: #DFFF00;
+    color: #000;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}  
+</style>

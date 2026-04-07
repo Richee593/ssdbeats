@@ -1,0 +1,128 @@
+<!-- Slider Section -->
+<section class="slider-section">
+
+  <div class="section-header">
+    <h2><%= sectionTitle %></h2>
+    <a href="<%= moreLink %>" class="more-link">More →</a>
+  </div>
+
+  <div class="slider-container">
+
+    <button class="slider-arrow left" aria-label="Scroll left">&#10094;</button>
+
+    <div class="slider-track">
+
+      <% items.forEach(item => { %>
+
+        <% 
+          let link = "#";
+          let image = "/images/hero.png";
+          let audio = "";
+          let artistName = "";
+          let title = item.title || item.name || "Untitled";
+
+          // =====================
+          // SONG
+          // =====================
+          if(type === "song") {
+            link = "/songs/" + item._id;
+
+            image = item.coverImage 
+              || (item.album && item.album.cover)
+              || "/images/default-song.png";
+
+            audio = item.audioFile || "";
+
+            artistName = item.artist 
+              ? item.artist.name 
+              : "Unknown Artist";
+          }
+
+          // =====================
+          // ARTIST
+          // =====================
+          if(type === "artist") {
+            link = "/artists/" + item._id;
+
+            image = item.image || "/images/default-artist.png";
+          }
+
+          // =====================
+          // ALBUM
+          // =====================
+          if(type === "album") {
+            link = "/albums/" + item._id;
+
+            image = item.cover || "/images/default-album.png";
+
+            artistName = item.artist 
+              ? item.artist.name 
+              : "Unknown Artist";
+          }
+        %>
+
+        <a href="<%= link %>" class="card <%= type %>">
+
+          <!-- IMAGE -->
+          <div class="card-image">
+
+            <img
+              src="<%= image %>"
+              alt="<%= title %>"
+              loading="lazy"
+            >
+
+            <% if(type === "song") { %>
+
+              <div class="play-overlay">
+
+                <button
+                  class="play-btn"
+                  data-id="<%= item._id %>"
+                  data-audio="<%= audio %>"
+                  data-title="<%= title %>"
+                  data-artist="<%= artistName %>"
+                  data-cover="<%= image %>"
+                  onclick="event.preventDefault(); event.stopPropagation();"
+                >
+                  ▶
+                </button>
+                
+                <div class="card-equalizer">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+              </div>
+
+            <% } %>
+
+          </div>
+
+          <!-- INFO -->
+          <div class="card-info">
+
+            <p class="card-title">
+              <%= title %>
+            </p>
+
+            <% if(type === "song" || type === "album") { %>
+              <p class="card-subtitle">
+                <%= artistName %>
+              </p>
+            <% } %>
+
+          </div>
+
+        </a>
+
+      <% }) %>
+
+    </div>
+
+    <button class="slider-arrow right" aria-label="Scroll right">&#10095;</button>
+
+  </div>
+
+</section>

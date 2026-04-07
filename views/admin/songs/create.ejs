@@ -1,0 +1,301 @@
+<%- include("../partials/navbar") %>
+<h2>Create New Song</h2>
+
+<form action="/admin/songs/create" method="POST" enctype="multipart/form-data" class="song-form">
+
+  <!-- TITLE -->
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" name="title" required>
+  </div>
+
+  <!-- MAIN ARTIST -->
+  <!-- MAIN ARTIST -->
+  <div class="form-group">
+    <label>Main Artist</label>
+  
+    <input type="text" id="artistSearch" placeholder="Search artist..." autocomplete="off">
+  
+    <!-- DROPDOWN RESULTS -->
+    <div id="artistResults" class="search-results"></div>
+  
+    <!-- HIDDEN INPUT (what backend receives) -->
+    <input type="hidden" name="artist" id="artistValue" required>
+  </div>
+
+  <!-- FEATURED ARTISTS -->
+  <div class="form-group">
+    <label>Featured Artists (Optional)</label>
+  
+    <input type="text" id="featuredSearch" placeholder="Search featured artists..." autocomplete="off">
+    <div id="featuredResults" class="search-results"></div>
+  
+    <!-- Selected tags -->
+    <div id="featuredTags" class="tags-container"></div>
+  
+    <!-- Hidden input -->
+    <input type="hidden" name="featuredArtists" id="featuredValues">
+  </div>
+
+  <!-- ALBUM -->
+  <div class="form-group">
+    <label>Album (Optional)</label>
+  
+    <input type="text" id="albumSearch" placeholder="Search album..." autocomplete="off">
+    <div id="albumResults" class="search-results"></div>
+  
+    <input type="hidden" name="album" id="albumValue">
+  </div>
+
+
+  <!-- GENRE -->
+  <div class="form-group">
+    <label>Genre</label>
+  
+    <input type="text" id="genreSearch" placeholder="Search genre..." autocomplete="off">
+    <div id="genreResults" class="search-results"></div>
+  
+    <input type="hidden" name="genre" id="genreValue" required>
+  </div>
+
+  <!-- RELEASE DATE -->
+  <div class="form-group">
+    <label>Release Date</label>
+    <input type="date" name="releaseDate">
+  </div>
+
+  <!-- AUDIO FILE -->
+  <div class="form-group">
+    <label>Audio File</label>
+    <input type="file" name="audioFile" accept="audio/*" required id="audioInput">
+    <audio id="audioPreview" controls style="display:none;margin-top:10px;"></audio>
+  </div>
+
+  <!-- COVER IMAGE -->
+  <div class="form-group">
+    <label>Cover Image (Optional)</label>
+    <input type="file" name="coverImage" accept="image/*" id="coverInput">
+    <img id="coverPreview" style="display:none;width:150px;margin-top:10px;border-radius:8px;">
+  </div>
+
+  <!-- FEATURED SONG -->
+  <div class="form-group">
+    <label>
+      <input type="checkbox" name="isFeatured" value="true">
+      Feature this song on homepage
+    </label>
+  </div>
+
+  <br>
+  <button type="submit" class="btn-create">Create Song</button>
+  <a href="/admin/songs" class="btn-cancel">Cancel</a>
+</form>
+
+<script>
+const artists = <%- JSON.stringify(artists) %>;
+const albums = <%- JSON.stringify(albums) %>;
+const genres = <%- JSON.stringify(genres) %>;
+
+
+// ===== GENERIC SEARCH FUNCTION =====
+function setupSingleSearch(inputId, resultsId, hiddenId, data, key){
+  const input = document.getElementById(inputId);
+  const resultsBox = document.getElementById(resultsId);
+  const hidden = document.getElementById(hiddenId);
+
+  input.addEventListener("input", () => {
+    const query = input.value.toLowerCase();
+    resultsBox.innerHTML = "";
+
+    if(!query) return;
+
+    data
+      .filter(item => item[key].toLowerCase().includes(query))
+      .forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("result-item");
+        div.textContent = item[key];
+
+        div.onclick = () => {
+          input.value = item[key];
+          hidden.value = item._id;
+          resultsBox.innerHTML = "";
+        };
+
+        resultsBox.appendChild(div);
+      });
+  });
+}
+
+
+// ===== MULTI SELECT (FEATURED ARTISTS) =====
+const featuredInput = document.getElementById("featuredSearch");
+const featuredResults = document.getElementById("featuredResults");
+const featuredTags = document.getElementById("featuredTags");
+const featuredHidden = document.getElementById("featuredValues");
+
+let selectedArtists = [];
+
+featuredInput.addEventListener("input", () => {
+  const query = featuredInput.value.toLowerCase();
+  featuredResults.innerHTML = "";
+
+  if(!query) return;
+
+  artists
+    .filter(a => a.name.toLowerCase().includes(query))
+    .forEach(artist => {
+
+      // prevent duplicates
+      if(selectedArtists.find(a => a._id === artist._id)) return;
+
+      const div = document.createElement("div");
+      div.classList.add("result-item");
+      div.textContent = artist.name;
+
+      div.onclick = () => {
+        selectedArtists.push(artist);
+        renderTags();
+        featuredInput.value = "";
+        featuredResults.innerHTML = "";
+      };
+
+      featuredResults.appendChild(div);
+    });
+});
+
+
+function renderTags(){
+  featuredTags.innerHTML = "";
+
+  selectedArtists.forEach((artist, index) => {
+    const tag = document.createElement("div");
+    tag.classList.add("tag");
+    tag.innerHTML = `
+      ${artist.name}
+      <span onclick="removeArtist(${index})">✕</span>
+    `;
+    featuredTags.appendChild(tag);
+  });
+
+  // update hidden input
+  featuredHidden.value = selectedArtists.map(a => a._id).join(",");
+}
+
+function removeArtist(index){
+  selectedArtists.splice(index,1);
+  renderTags();
+}
+
+
+// ===== INIT SINGLE SEARCHES =====
+setupSingleSearch("artistSearch","artistResults","artistValue",artists,"name");
+setupSingleSearch("albumSearch","albumResults","albumValue",albums,"title");
+setupSingleSearch("genreSearch","genreResults","genreValue",genres,"name");
+
+
+// ===== CLOSE DROPDOWNS =====
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".form-group")) {
+    document.querySelectorAll(".search-results").forEach(box => box.innerHTML = "");
+  }
+});
+
+
+// ===== AUDIO PREVIEW =====
+audioInput.addEventListener("change", () => {
+  const file = audioInput.files[0];
+  if(file){
+    audioPreview.src = URL.createObjectURL(file);
+    audioPreview.style.display = "block";
+  }
+});
+
+// ===== COVER PREVIEW =====
+coverInput.addEventListener("change", () => {
+  const file = coverInput.files[0];
+  if(file){
+    coverPreview.src = URL.createObjectURL(file);
+    coverPreview.style.display = "block";
+  }
+});
+</script>
+
+<style>
+  .song-form{
+    max-width:600px;
+  }
+  .form-group{
+    margin-bottom:18px;
+    display:flex;
+    flex-direction:column;
+  }
+  .form-group label{
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .form-group input,
+  .form-group select{
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:5px;
+  }
+  .warning{
+    color:red;
+  }
+  .btn-create{
+    background:#DFFF00;
+    border:none;
+    padding:10px 20px;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:6px;
+  }
+  .btn-cancel{
+    margin-left:10px;
+    text-decoration:none;
+  }
+  
+  
+    
+  .search-results{
+    border:1px solid #ccc;
+    max-height:150px;
+    overflow-y:auto;
+    background:#fff;
+    position:relative;
+    z-index:10;
+  }
+  
+  .result-item{
+    padding:8px;
+    cursor:pointer;
+  }
+  
+  .result-item:hover{
+    background:#DFFF00;
+  }
+  
+  /* TAGS (FEATURED ARTISTS) */
+  .tags-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:8px;
+  }
+  
+  .tag{
+    background:#DFFF00;
+    padding:5px 10px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:14px;
+  }
+  
+  .tag span{
+    cursor:pointer;
+    font-weight:bold;
+  }
+</style>

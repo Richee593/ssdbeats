@@ -1,0 +1,26 @@
+<%
+  const image = artist.image
+    ? artist.image
+    : baseUrl + "/images/default-artist.png";
+
+  const name = artist.name || "Unknown Artist";
+%>
+
+<a href="/artists/<%= artist._id %>" class="artist-card">
+
+  <!-- IMAGE -->
+  <div class="artist-image">
+    <img
+      src="<%= image %>"
+      alt="<%= name %>"
+      loading="lazy"
+    >
+  </div>
+
+  <!-- NAME -->
+  <div class="artist-info">
+    <p class="artist-name"><%= name %></p>
+  </div>
+
+</a>
+

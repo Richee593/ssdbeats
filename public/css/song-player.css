@@ -1,0 +1,181 @@
+/* =========================
+   SONG DETAIL PLAYER STYLES
+========================= */
+
+/* Container */
+.single-song-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  gap: 20px;
+}
+
+/* Song Cover */
+.single-song-cover img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Song Info */
+.single-song-details {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.single-song-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+  color: #DFFF00; /* SSDBeats brand color */
+}
+
+.single-song-artist {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.single-song-meta {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin: 5px 0 15px 0;
+}
+
+/* =========================
+   Custom Player
+========================= */
+.single-ssd-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #1c1c1c;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.single-player-center {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+#single-play {
+  background-color: #DFFF00;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+#single-progress {
+  flex: 1;
+  height: 5px;
+  border-radius: 5px;
+  background: #555;
+  -webkit-appearance: none;
+}
+
+#single-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #DFFF00;
+  cursor: pointer;
+  border: none;
+}
+
+.single-download-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #DFFF00;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.single-download-btn:hover {
+  background-color: #bfcf00;
+}
+
+/* =========================
+   Related Songs Grid
+========================= */
+.single-songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.single-song-card {
+  position: relative;
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.single-song-image {
+  position: relative;
+}
+
+.single-song-image img {
+  width: 100%;
+  display: block;
+}
+
+.single-play-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #DFFF00;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.single-song-link-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.single-song-info {
+  padding: 5px;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .single-song-title {
+    font-size: 1.5rem;
+  }
+  #single-play {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  .single-download-btn {
+    padding: 6px 12px;
+  }
+}

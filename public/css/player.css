@@ -1,0 +1,96 @@
+.ssd-player{
+
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+
+height:90px;
+
+background:#0f0f0f;
+color:white;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:10px 20px;
+
+border-top:1px solid #222;
+
+z-index:9999;
+
+}
+
+.hidden{
+display:none;
+}
+
+.player-left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.player-left img{
+width:60px;
+height:60px;
+object-fit:cover;
+border-radius:6px;
+}
+
+.player-meta p{
+margin:0;
+}
+
+.player-center{
+flex:1;
+text-align:center;
+}
+
+.controls{
+display:flex;
+justify-content:center;
+gap:12px;
+margin-bottom:6px;
+}
+
+.controls button{
+background:none;
+border:none;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+.progress-wrap{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.progress-wrap input{
+flex:1;
+}
+
+.player-right{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+/* MINI PLAYER */
+
+.mini-player{
+
+height:60px;
+
+}
+
+.mini-player .progress-wrap{
+display:none;
+}
+
+.mini-player .player-meta{
+display:none;
+}

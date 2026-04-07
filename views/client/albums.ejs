@@ -1,0 +1,62 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: 'albums' }) %>
+
+<section class="main-sections">
+
+  <!-- =========================
+       TRENDING ALBUMS
+  ========================= -->
+  <% if(trendingAlbums && trendingAlbums.length > 0) { %>
+    <div class="section-header">
+      <h2>🔥 Trending Albums</h2>
+    </div>
+    <div class="slider-container">
+      <div class="slider-track">
+        <% trendingAlbums.forEach(album => { %>
+          <%- include('partials/album-card', { album: album, showStats: true }) %>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- =========================
+       NEW RELEASES
+  ========================= -->
+  <% if(newReleases && newReleases.length > 0) { %>
+    <div class="section-header">
+      <h2>🆕 New Releases</h2>
+    </div>
+    <div class="slider-container">
+      <div class="slider-track">
+        <% newReleases.forEach(album => { %>
+          <%- include('partials/album-card', { album: album }) %>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- =========================
+       ALL ALBUMS
+  ========================= -->
+  <% if(allAlbums && allAlbums.length > 0) { %>
+    <div class="section-header">
+      <h2>📀 All Albums</h2>
+    </div>
+    <div class="slider-container">
+      <div class="slider-track">
+        <% allAlbums.forEach(album => { %>
+          <%- include('partials/album-card', { album: album }) %>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+</section>
+
+
+
+
+
+
+
+

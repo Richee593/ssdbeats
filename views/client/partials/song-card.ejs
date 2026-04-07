@@ -1,0 +1,58 @@
+<% 
+  const link = "/songs/" + song._id;
+
+  const image = song.coverImage
+    || (song.album && song.album.cover)
+    || "/images/default-song.png";
+
+  const audio = song.audioFile || "";
+
+  const artistName = song.artist ? song.artist.name : "Unknown Artist";
+
+  const title = song.title || "Untitled";
+%>
+
+<a href="<%= link %>" class="card song">
+
+  <!-- IMAGE -->
+  <div class="card-image">
+    <img
+      src="<%= image %>"
+      alt="<%= title %>"
+      loading="lazy"
+    >
+
+    <!-- PLAY OVERLAY -->
+    <div class="play-overlay">
+      <% if (audio) { %>
+        <button
+          class="play-btn"
+          onclick="event.preventDefault(); event.stopPropagation();"
+          data-id="<%= song._id %>"
+          data-audio="<%= audio %>"
+          data-title="<%= title %>"
+          data-artist="<%= artistName %>"
+          data-cover="<%= image %>"
+          aria-label="Play <%= title %>"
+        >
+          ▶
+        </button>
+
+        <div class="card-equalizer">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      <% } else { %>
+        <div class="no-audio">No Audio</div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="card-info">
+    <p class="card-title"><%= title %></p>
+    <p class="card-subtitle"><%= artistName %></p>
+  </div>
+
+</a>

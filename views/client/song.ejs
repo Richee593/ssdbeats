@@ -1,0 +1,377 @@
+<%- include('partials/header') %>
+
+<section class="single-song-page">
+
+  <div class="single-song-container">
+
+    <!-- Cover Image -->
+    <div class="single-song-cover">
+      <img 
+        id="single-player-cover"
+        src="<%= song.coverImage ? song.coverImage : '/images/default-song.png' %>" 
+        alt="<%= song.title %>"
+      >
+      <% if(song.isFeatured){ %>
+        <span class="badge featured-badge">FEATURED</span>
+      <% } %>
+      <% if(song.trendingScore > 50){ %>
+        <span class="badge hot-badge">HOT</span>
+      <% } %>
+    </div>
+
+    <!-- Song Info -->
+    <div class="single-song-details">
+      <h1 id="single-player-title" class="single-song-title"><%= song.title %></h1>
+
+      <% if(song.artist) { %>
+        <a href="/artists/<%= song.artist._id %>" id="single-player-artist" class="single-song-artist">
+          <%= song.artist.name %>
+        </a>
+      <% } else { %>
+        <p id="single-player-artist">Unknown Artist</p>
+      <% } %>
+
+      <p class="single-song-meta">
+        Genre: <%= song.genre ? song.genre.name : "Unknown Genre" %> |
+        Album: <%= song.album ? song.album.title : "Unknown Album" %> |
+        Released: <%= song.releaseDate ? song.releaseDate.toDateString() : "Unknown Date" %>
+      </p>
+
+      <!-- Stats -->
+      <div class="song-stats">
+        <span>▶ Plays: <%= song.playCount %></span>
+        <span>⬇ Downloads: <%= song.downloadCount %></span>
+        <span>🔗 Shares: <%= song.shareCount %></span>
+        <span>📊 Weekly Score: <%= song.weeklyScore %></span>
+        <span>📅 Monthly Score: <%= song.monthlyScore %></span>
+        <span>🗓 Yearly Score: <%= song.yearlyScore %></span>
+      </div>
+
+      <!-- Custom Player -->
+      <% if(song.audioFile) { %>
+      <div id="single-player" class="single-ssd-player">
+        <div class="single-player-center">
+          <button id="single-play">▶</button>
+          <input type="range" id="single-progress" value="0" min="0" max="100">
+        </div>
+        <div class="card-equalizer"></div>
+        <audio id="single-audio" data-id="<%= song._id %>" data-audio="<%= song.audioFile %>"></audio>
+      </div>
+      <% } else { %>
+        <p>No audio available</p>
+      <% } %>
+
+      <!-- Action Buttons -->
+      <div class="song-actions">
+        <% if(song.audioFile) { %>
+          <a href="/api/player/download/<%= song._id %>" class="download-btn">⬇ Download</a>
+        <% } %>
+
+        <button class="song-share-btn" data-id="<%= song._id %>">
+          Share
+        </button>
+
+        <div class="share-options hidden" id="share-options-<%= song._id %>">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=<%= baseUrl %>/songs/<%= song._id %>" target="_blank">Facebook</a>
+          <a href="https://twitter.com/intent/tweet?url=<%= baseUrl %>/songs/<%= song._id %>" target="_blank">Twitter</a>
+          <a href="https://t.me/share/url?url=<%= baseUrl %>/songs/<%= song._id %>" target="_blank">Telegram</a>
+          <button class="copy-link-btn" data-link="<%= baseUrl %>/songs/<%= song._id %>">Copy Link</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- More From Artist -->
+<section class="single-related-section">
+  <h2>More From <%= song.artist ? song.artist.name : "Artist" %></h2>
+
+  <div class="single-songs-grid">
+    <% relatedSongs.forEach(related => { %>
+
+      <div class="single-song-card">
+
+        <div class="single-song-image">
+          <img 
+            src="<%= related.coverImage ? related.coverImage : '/images/default-song.png' %>" 
+            alt="<%= related.title %>"
+          >
+
+          <button
+            class="single-play-btn"
+            data-audio="<%= related.audioFile ? related.audioFile : '' %>"
+            data-title="<%= related.title %>"
+            data-artist="<%= related.artist ? related.artist.name : 'Unknown Artist' %>"
+            data-cover="<%= related.coverImage ? related.coverImage : '/images/default-song.png' %>"
+            data-id="<%= related._id %>"
+          >
+            ▶
+          </button>
+
+          <a href="/songs/<%= related._id %>" class="single-song-link-overlay"></a>
+        </div>
+
+        <div class="single-song-info">
+          <h3><%= related.title %></h3>
+          <p><%= related.artist ? related.artist.name : "Unknown Artist" %></p>
+        </div>
+
+      </div>
+
+    <% }) %>
+  </div>
+
+</section>
+<style>
+/* ===== SECTION ===== */
+.single-related-section {
+  margin-top: 40px;
+}
+
+.single-related-section h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* ===== GRID ===== */
+.single-songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 20px;
+}
+
+/* ===== CARD ===== */
+.single-song-card {
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: .2s ease;
+  position: relative;
+}
+
+.single-song-card:hover {
+  transform: translateY(-4px);
+  background: #181818;
+}
+
+/* ACTIVE PLAYING */
+.single-song-card.active {
+  outline: 2px solid #DFFF00;
+}
+
+/* ===== IMAGE ===== */
+.single-song-image {
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+
+.single-song-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== PLAY BUTTON ===== */
+.single-play-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #DFFF00;
+  color: #000;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: .2s ease;
+}
+
+.single-song-card:hover .single-play-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.single-play-btn.playing {
+  background: #fff;
+}
+
+/* ===== LINK OVERLAY ===== */
+.single-song-link-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* ===== INFO ===== */
+.single-song-info {
+  padding: 12px;
+}
+
+.single-song-info h3 {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.single-song-info p {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Responsive Design */
+
+/* Tablets and small desktops (768px - 991px) */
+@media (max-width: 991px) {
+  .single-songs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+}
+
+/* Mobile devices (576px - 767px) */
+@media (max-width: 767px) {
+  .single-related-section {
+    margin-top: 30px;
+  }
+  .single-songs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  .single-song-info h3 {
+    font-size: 12px;
+  }
+  .single-song-info p {
+    font-size: 10px;
+  }
+}
+
+/* Small screens (320px - 575px) */
+@media (max-width: 575px) {
+  .single-songs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  .single-song-info {
+    padding: 8px;
+  }
+  .single-play-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+/* Very small screens (max-width: 319px) */
+@media (max-width: 319px) {
+  .single-songs-grid {
+    grid-template-columns: 1fr;
+  }
+  .single-song-card {
+    margin: 0 10px;
+  }
+}
+  
+</style>
+
+<script>
+
+let relatedAudio = new Audio();
+let relatedIndex = -1;
+let relatedPlaying = false;
+
+const relatedBtns = document.querySelectorAll(".single-play-btn");
+const relatedCards = document.querySelectorAll(".single-song-card");
+
+const relatedPlaylist = Array.from(relatedBtns).map(btn => ({
+id: btn.dataset.id,
+audio: btn.dataset.audio,
+title: btn.dataset.title,
+artist: btn.dataset.artist,
+cover: btn.dataset.cover
+}));
+
+function playRelated(index){
+
+const song = relatedPlaylist[index];
+if(!song || !song.audio) return;
+
+// toggle pause same song
+if(relatedIndex === index){
+if(relatedPlaying){
+relatedAudio.pause();
+relatedPlaying = false;
+relatedBtns[index].innerHTML = "▶";
+relatedCards[index].classList.remove("active");
+}else{
+relatedAudio.play();
+relatedPlaying = true;
+relatedBtns[index].innerHTML = "❚❚";
+relatedCards[index].classList.add("active");
+}
+return;
+}
+
+// new song
+relatedAudio.pause();
+
+relatedIndex = index;
+relatedAudio.src = song.audio;
+relatedAudio.play();
+relatedPlaying = true;
+
+// reset UI
+relatedCards.forEach(c => c.classList.remove("active"));
+relatedBtns.forEach(b => b.innerHTML = "▶");
+
+// set active
+relatedCards[index].classList.add("active");
+relatedBtns[index].innerHTML = "❚❚";
+
+// update global player
+updateGlobalPlayer(song);
+
+// submit play count
+submitPlay(song.id);
+
+}
+
+relatedBtns.forEach((btn,index)=>{
+btn.addEventListener("click",(e)=>{
+e.preventDefault();
+e.stopPropagation();
+playRelated(index);
+});
+});
+
+// auto next
+relatedAudio.addEventListener("ended",()=>{
+let next = relatedIndex + 1;
+if(next >= relatedPlaylist.length) next = 0;
+playRelated(next);
+});
+
+function submitPlay(songId){
+fetch(`/songs/${songId}/play`,{
+method:"POST"
+}).catch(()=>{});
+}
+
+</script>
+
+<!-- CSS & JS -->
+<link rel="stylesheet" href="/css/song-player.css">
+<script src="/js/song-player.js" defer></script>
+<script src="/js/song-share.js" defer></script>
+

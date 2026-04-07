@@ -1,0 +1,228 @@
+/* =========================
+   ROOT / GLOBAL
+========================= */
+
+:root{
+  --accent:#DFFF00;
+  --bg:#0d0d0d;
+  --card:#151515;
+  --text:#ffffff;
+  --muted:#b3b3b3;
+  --border:#222;
+}
+
+.single-song-page{
+  background:var(--bg);
+  color:var(--text);
+  padding:20px 15px 40px;
+  min-height:100vh;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.single-song-container{
+  max-width:900px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  align-items:center;
+}
+
+
+/* =========================
+   COVER
+========================= */
+
+.single-song-cover{
+  position:relative;
+  width:100%;
+  max-width:350px;
+}
+
+.single-song-cover img{
+  width:100%;
+  border-radius:18px;
+  box-shadow:0 10px 40px rgba(0,0,0,.6);
+}
+
+/* badges */
+
+.badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:10px;
+  font-weight:600;
+}
+
+.featured-badge{
+  background:var(--accent);
+  color:#000;
+}
+
+.hot-badge{
+  background:#ff3b3b;
+  color:white;
+  top:12px;
+  left:auto;
+  right:12px;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.single-song-details{
+  width:100%;
+  text-align:center;
+}
+
+.single-song-title{
+  font-size:24px;
+  margin-bottom:5px;
+}
+
+.single-song-artist{
+  color:var(--accent);
+  font-weight:600;
+  text-decoration:none;
+  display:block;
+  margin-bottom:10px;
+}
+
+.single-song-meta{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:15px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.song-stats{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  font-size:12px;
+  margin-bottom:20px;
+}
+
+.song-stats span{
+  background:var(--card);
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+.single-ssd-player{
+  background:var(--card);
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:20px;
+}
+
+.single-player-center{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+#single-play{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:none;
+  background:var(--accent);
+  color:black;
+  font-size:20px;
+  cursor:pointer;
+}
+
+#single-progress{
+  flex:1;
+  accent-color:var(--accent);
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.song-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.download-btn,
+.song-share-btn{
+  border:none;
+  padding:10px 16px;
+  border-radius:20px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.download-btn{
+  background:var(--accent);
+  color:black;
+  text-decoration:none;
+}
+
+.song-share-btn{
+  background:#222;
+  color:white;
+}
+
+
+/* =========================
+   SHARE DROPDOWN
+========================= */
+
+.share-options{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:center;
+}
+
+.share-options a,
+.share-options button{
+  background:#222;
+  border:none;
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:13px;
+  color:white;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.hidden{
+  display:none;
+}
+
+
+
+
+
+
+
+

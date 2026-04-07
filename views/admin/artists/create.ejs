@@ -1,0 +1,162 @@
+<%- include("../partials/navbar") %>
+<h2>Create Artist</h2>
+
+<form action="/admin/artists/create" method="POST" enctype="multipart/form-data" class="artist-form">
+
+<!-- NAME (SMART SEARCH) -->
+<div class="form-group">
+  <label>Artist Name</label>
+  <input type="text" id="artistName" name="name" placeholder="Type artist name..." required autocomplete="off">
+  <div id="artistSuggestions" class="search-results"></div>
+</div>
+
+<!-- BIO -->
+<div class="form-group">
+  <label>Bio</label>
+  <textarea name="bio" placeholder="Artist Bio"></textarea>
+</div>
+
+<!-- GENDER -->
+<div class="form-group">
+  <label>Gender</label>
+  <select name="gender">
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Group">Group</option>
+  </select>
+</div>
+
+<!-- IMAGE -->
+<div class="form-group">
+  <label>Artist Image</label>
+  <input type="file" name="image" id="imageInput">
+  <img id="imagePreview" style="display:none;width:80px;margin-top:10px;border-radius:50%;">
+</div>
+
+<!-- SOCIAL LINKS -->
+<h3>Social Media Links</h3>
+
+<div class="form-group">
+  <input type="text" name="instagram" placeholder="Instagram Link">
+  <input type="text" name="facebook" placeholder="Facebook Link">
+  <input type="text" name="twitter" placeholder="Twitter Link">
+  <input type="text" name="youtube" placeholder="YouTube Link">
+  <input type="text" name="tiktok" placeholder="TikTok Link">
+  <input type="text" name="audiomack" placeholder="Audiomack Link">
+  <input type="text" name="spotify" placeholder="Spotify Link">
+  <input type="text" name="appleMusic" placeholder="Apple Music Link">
+</div>
+
+<br>
+
+<button type="submit" class="btn-save">Create Artist</button>
+
+</form>
+
+
+
+
+
+<script>
+const artists = <%- JSON.stringify(artists || []) %>;
+
+const input = document.getElementById("artistName");
+const box = document.getElementById("artistSuggestions");
+
+// 🔍 LIVE SEARCH
+input.addEventListener("input", () => {
+  const query = input.value.toLowerCase();
+  box.innerHTML = "";
+
+  if (!query) return;
+
+  const matches = artists.filter(a =>
+    a.name.toLowerCase().includes(query)
+  );
+
+  matches.forEach(a => {
+    const div = document.createElement("div");
+    div.classList.add("result-item");
+    div.textContent = a.name;
+
+    div.onclick = () => {
+      input.value = a.name;
+      box.innerHTML = "";
+    };
+
+    box.appendChild(div);
+  });
+});
+
+// 🖼 IMAGE PREVIEW
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("imagePreview");
+
+imageInput.addEventListener("change", () => {
+  const file = imageInput.files[0];
+
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+  }
+});
+</script>
+
+
+
+
+
+
+
+<style>
+
+.artist-form{
+  max-width:600px;
+}
+
+.form-group{
+  margin-bottom:15px;
+  display:flex;
+  flex-direction:column;
+}
+
+.form-group label{
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+.search-results{
+  border:1px solid #ccc;
+  max-height:150px;
+  overflow-y:auto;
+  background:#fff;
+}
+
+.result-item{
+  padding:8px;
+  cursor:pointer;
+}
+
+.result-item:hover{
+  background:#DFFF00;
+}
+
+.btn-save{
+  background:#DFFF00;
+  border:none;
+  padding:10px 18px;
+  font-weight:bold;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+</style>

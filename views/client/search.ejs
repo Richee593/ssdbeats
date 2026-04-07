@@ -1,0 +1,248 @@
+<h2 class="search-title">
+  Search Results for "<%= query %>"
+</h2>
+
+<section class="search-results">
+
+  <!-- SONGS -->
+  <h3 class="search-section-title">Songs</h3>
+
+  <% if (songs.length) { %>
+    <div class="search-list">
+
+      <% songs.forEach(song => { %>
+
+        <% 
+          const cover = song.coverImage 
+            ? song.coverImage 
+            : "/images/hero.png";
+        %>
+
+        <a href="/songs/<%= song._id %>" class="search-item">
+
+          <img 
+            src="<%= cover %>" 
+            alt="<%= song.title %>"
+            onerror="this.src='/images/hero.png'"
+          >
+
+          <div class="search-info">
+            <div class="search-name"><%= song.title %></div>
+
+            <div class="search-meta">
+              <% if (song.artist) { %>
+                <span><%= song.artist.name %></span>
+              <% } %>
+
+              <% if (song.album) { %>
+                • <span><%= song.album.title %></span>
+              <% } %>
+            </div>
+          </div>
+
+        </a>
+
+      <% }) %>
+
+    </div>
+  <% } else { %>
+    <p class="no-results">No songs found.</p>
+  <% } %>
+
+
+
+  <!-- ARTISTS -->
+  <h3 class="search-section-title">Artists</h3>
+
+  <% if (artists.length) { %>
+    <div class="search-list">
+
+      <% artists.forEach(artist => { %>
+
+        <% 
+          const image = artist.image 
+            ? artist.image 
+            : "/images/hero.png";
+        %>
+
+        <a href="/artists/<%= artist._id %>" class="search-item">
+
+          <img 
+            src="<%= image %>" 
+            alt="<%= artist.name %>"
+            onerror="this.src='/images/hero.png'"
+          >
+
+          <div class="search-info">
+            <div class="search-name"><%= artist.name %></div>
+            <div class="search-meta">Artist</div>
+          </div>
+
+        </a>
+
+      <% }) %>
+
+    </div>
+  <% } else { %>
+    <p class="no-results">No artists found.</p>
+  <% } %>
+
+
+
+  <!-- ALBUMS -->
+  <h3 class="search-section-title">Albums</h3>
+
+  <% if (albums.length) { %>
+    <div class="search-list">
+
+      <% albums.forEach(album => { %>
+
+        <% 
+          const image = album.coverImage 
+            ? album.coverImage 
+            : "/images/hero.png";
+        %>
+
+        <a href="/albums/<%= album._id %>" class="search-item">
+
+          <img 
+            src="<%= image %>" 
+            alt="<%= album.title %>"
+            onerror="this.src='/images/hero.png'"
+          >
+
+          <div class="search-info">
+            <div class="search-name"><%= album.title %></div>
+
+            <div class="search-meta">
+              <% if (album.artist) { %>
+                <%= album.artist.name %>
+              <% } %>
+            </div>
+          </div>
+
+        </a>
+
+      <% }) %>
+
+    </div>
+  <% } else { %>
+    <p class="no-results">No albums found.</p>
+  <% } %>
+
+</section>
+
+<style>
+
+/* SEARCH PAGE */
+
+.search-title {
+  color: #fff;
+  margin: 20px 0 10px;
+}
+
+.search-section-title {
+  color: #DFFF00;
+  margin: 20px 0 10px;
+  font-size: 18px;
+}
+
+/* LIST */
+
+.search-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ITEM */
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: #111;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.search-item:hover {
+  background: #181818;
+  border-color: #DFFF00;
+}
+
+/* IMAGE */
+
+.search-item img {
+  width: 55px;
+  height: 55px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* INFO */
+
+.search-info {
+  flex: 1;
+}
+
+.search-name {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.search-meta {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* EMPTY */
+
+.no-results {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+  .search-item img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .search-name {
+    font-size: 14px;
+  }
+
+  .search-meta {
+    font-size: 11px;
+  }
+
+}
+
+@media (max-width: 350px) {
+
+  .search-item {
+    padding: 6px;
+  }
+
+  .search-item img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .search-name {
+    font-size: 13px;
+  }
+
+}
+
+</style>

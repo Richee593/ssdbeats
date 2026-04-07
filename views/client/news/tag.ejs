@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %>
+
+<section class="news-tag-page">
+  <div class="container">
+    <h1>News tagged with: <%= tag %></h1>
+
+    <div class="news-grid">
+      <% taggedNews.forEach(news => { %>
+        <div class="news-card">
+          <a href="/news/<%= news.slug %>">
+            <img src="<%= news.coverImage || '/images/hero.png' %>" alt="<%= news.title %>">
+            <h4><%= news.title %></h4>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+
+    <h3>Latest News</h3>
+    <div class="news-grid">
+      <% latestNews.forEach(news => { %>
+        <div class="news-card">
+          <a href="/news/<%= news.slug %>">
+            <img src="<%= news.coverImage || '/images/hero.png' %>" alt="<%= news.title %>">
+            <h4><%= news.title %></h4>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('../../partials/footer') %>

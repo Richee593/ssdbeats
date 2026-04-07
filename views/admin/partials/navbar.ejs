@@ -1,0 +1,58 @@
+<nav class="admin-navbar">
+  <a href="/admin/dashboard">Dashboard</a>
+  <a href="/admin/songs">Songs</a>
+  <a href="/admin/artists">Artists</a>
+  <a href="/admin/albums">Albums</a>
+  <a href="/admin/genres">Genres</a>
+  <a href="/admin/news">News</a>
+  <a href="/admin/pages">Pages</a>
+  <a href="/">View Site</a>
+  <a href="/admin/logout" class="logout">Logout</a>
+</nav>
+
+<style>
+  .admin-navbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+    justify-content: center;
+  }
+
+  .admin-navbar a {
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: #f5f5f5;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .admin-navbar a:hover {
+    background: #DFFF00;
+    color: #000;
+  }
+
+  .admin-navbar .logout {
+    background: #ff4d4d;
+    color: white;
+  }
+
+  .admin-navbar .logout:hover {
+    background: #ff1a1a;
+  }
+
+  @media (max-width: 768px) {
+    .admin-navbar {
+      gap: 6px;
+      padding: 6px;
+    }
+    .admin-navbar a {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+  }
+</style>

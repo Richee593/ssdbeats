@@ -1,0 +1,220 @@
+<%- include("../partials/navbar") %>
+
+<h2>Edit Album</h2>
+
+<form action="/admin/albums/edit/<%= album._id %>" method="POST" enctype="multipart/form-data" class="album-form">
+
+  <!-- ALBUM TITLE -->
+  <div class="form-group">
+    <label>Album Title</label>
+    <input type="text" name="title" value="<%= album.title %>" required>
+  </div>
+
+  <!-- ARTIST -->
+  <div class="form-group">
+    <label>Artist</label>
+
+    <input type="text" id="artistSearch" placeholder="Search artist..." autocomplete="off" value="<%= album.artist ? album.artist.name : '' %>">
+    <div id="artistResults" class="search-results"></div>
+    <input type="hidden" name="artist" id="artistValue" value="<%= album.artist ? album.artist._id : '' %>" required>
+  </div>
+
+  <!-- GENRE -->
+  <div class="form-group">
+    <label>Genre</label>
+
+    <input type="text" id="genreSearch" placeholder="Search genre..." autocomplete="off" value="<%= album.genre ? album.genre.name : '' %>">
+    <div id="genreResults" class="search-results"></div>
+    <input type="hidden" name="genre" id="genreValue" value="<%= album.genre ? album.genre._id : '' %>" required>
+  </div>
+
+  <!-- RELEASE DATE -->
+  <div class="form-group">
+    <label>Release Date (Optional)</label>
+    <input type="date" name="releaseDate" value="<%= album.releaseDate ? album.releaseDate.toISOString().split('T')[0] : '' %>">
+  </div>
+
+  <!-- COVER IMAGE -->
+  <div class="form-group">
+    <label>Album Cover (Optional)</label>
+    <input type="file" name="cover" accept="image/*" id="coverInput">
+
+    <% if(album.cover){ %>
+      <img src="<%= album.cover %>" id="coverPreview" style="width:150px;margin-top:10px;border-radius:8px;">
+    <% } else { %>
+      <img id="coverPreview" style="display:none;width:150px;margin-top:10px;border-radius:8px;">
+    <% } %>
+  </div>
+
+  <br>
+  <button type="submit" class="btn-create" id="submitBtn">Update Album</button>
+  <a href="/admin/albums" class="btn-cancel">Cancel</a>
+</form>
+
+
+
+<script>
+const artists = <%- JSON.stringify(artists) %>;
+const genres = <%- JSON.stringify(genres) %>;
+
+// ARTIST SEARCH
+const artistInput = document.getElementById("artistSearch");
+const artistResults = document.getElementById("artistResults");
+const artistHidden = document.getElementById("artistValue");
+
+artistInput.addEventListener("input", () => {
+  const query = artistInput.value.toLowerCase();
+  artistResults.innerHTML = "";
+
+  if (!query) return;
+
+  const filtered = artists.filter(a => a.name.toLowerCase().includes(query));
+  filtered.forEach(a => {
+    const div = document.createElement("div");
+    div.classList.add("result-item");
+    div.textContent = a.name;
+
+    div.onclick = () => {
+      artistInput.value = a.name + " ✅";
+      artistHidden.value = a._id;
+      artistResults.innerHTML = "";
+    };
+
+    artistResults.appendChild(div);
+  });
+});
+
+// GENRE SEARCH
+const genreInput = document.getElementById("genreSearch");
+const genreResults = document.getElementById("genreResults");
+const genreHidden = document.getElementById("genreValue");
+
+genreInput.addEventListener("input", () => {
+  const query = genreInput.value.toLowerCase();
+  genreResults.innerHTML = "";
+
+  if (!query) return;
+
+  const filtered = genres.filter(g => g.name.toLowerCase().includes(query));
+  filtered.forEach(g => {
+    const div = document.createElement("div");
+    div.classList.add("result-item");
+    div.textContent = g.name;
+
+    div.onclick = () => {
+      genreInput.value = g.name + " ✅";
+      genreHidden.value = g._id;
+      genreResults.innerHTML = "";
+    };
+
+    genreResults.appendChild(div);
+  });
+});
+
+// CLOSE DROPDOWNS WHEN CLICK OUTSIDE
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".form-group")) {
+    artistResults.innerHTML = "";
+    genreResults.innerHTML = "";
+  }
+});
+
+// COVER PREVIEW
+const coverInput = document.getElementById("coverInput");
+const coverPreview = document.getElementById("coverPreview");
+
+coverInput.addEventListener("change", () => {
+  const file = coverInput.files[0];
+  if(file){
+    coverPreview.src = URL.createObjectURL(file);
+    coverPreview.style.display = "block";
+  }
+});
+
+//preven invalid submision//
+document.querySelector("form").addEventListener("submit", (e) => {
+  const artist = document.getElementById("artistValue").value;
+  const genre = document.getElementById("genreValue").value;
+
+  if (!artist) {
+    alert("Please select a valid artist");
+    e.preventDefault();
+  }
+
+  if (!genre) {
+    alert("Please select a valid genre");
+    e.preventDefault();
+  }
+});
+
+// progress bar
+const form = document.querySelector("form");
+const btn = document.getElementById("submitBtn");
+
+form.addEventListener("submit", () => {
+  btn.innerText = "Updating...";
+  btn.disabled = true;
+});
+</script>
+
+
+<style>
+.album-form{
+  max-width:600px;
+}
+
+.form-group{
+  margin-bottom:18px;
+  display:flex;
+  flex-direction:column;
+}
+
+.form-group label{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.form-group input{
+  padding:8px;
+  border:1px solid #ccc;
+  border-radius:5px;
+}
+
+.btn-create{
+  background:#DFFF00;
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
+  font-weight:bold;
+  border-radius:6px;
+}
+
+.btn-cancel{
+  margin-left:10px;
+  text-decoration:none;
+}
+
+.search-results{
+  border:1px solid #ccc;
+  border-radius:5px;
+  max-height:150px;
+  overflow-y:auto;
+  background:white;
+  margin-top:3px;
+  position:absolute;
+  z-index:10;
+}
+
+.result-item{
+  padding:6px 10px;
+  cursor:pointer;
+}
+
+.result-item:hover{
+  background:#f0f0f0;
+}
+
+.form-group{
+  position: relative;
+}
+</style>

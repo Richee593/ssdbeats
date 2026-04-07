@@ -1,0 +1,215 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: 'songs' }) %>
+
+  <!-- PAGE TITLE -->
+  <div class="page-header">
+    <h2>Discover Music</h2>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="songs-nav">
+    <a href="#all-songs" class="active">🎯 All Songs</a>
+    <a href="#trending">🔥 Trending</a>
+    <a href="#rising">🚀 Rising</a>
+    <a href="#weekly">🏆 Weekly</a>
+    <a href="#new">🆕 New</a>
+    <a href="#yearly">📅 Yearly</a>
+  </div>
+
+  <!-- ===================== -->
+  <!-- ALL SONGS (WITH PAGINATION) -->
+  <!-- ===================== -->
+  <section id="all-songs" class="song-section">
+    <h2>🎯 All Songs</h2>
+
+    <div class="songs-grid">
+      <% songs.forEach(song => { %>
+        <%- include('partials/song-card', { song: song }) %>
+      <% }) %>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <% if(currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %>">Prev</a>
+      <% } %>
+
+      <% for(let i=1; i <= totalPages; i++) { %>
+        <a href="?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+      <% } %>
+
+      <% if(currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %>">Next</a>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- TRENDING -->
+  <!-- ===================== -->
+  <section id="trending" class="song-section">
+    <h2>🔥 Trending Now</h2>
+    <div class="songs-grid">
+      <% trendingSongs.forEach(song => { %>
+        <%- include('partials/song-card', { song: song }) %>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- RISING -->
+  <!-- ===================== -->
+  <section id="rising" class="song-section">
+    <h2>🚀 Rising Fast</h2>
+    <div class="songs-grid">
+      <% risingSongs.forEach(song => { %>
+        <%- include('partials/song-card', { song: song }) %>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- WEEKLY -->
+  <!-- ===================== -->
+  <section id="weekly" class="song-section">
+    <h2>🏆 Weekly Top 10</h2>
+    <div class="songs-grid">
+      <% weeklySongs.forEach(song => { %>
+        <%- include('partials/song-card', { song: song }) %>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- NEW RELEASES -->
+  <!-- ===================== -->
+  <section id="new" class="song-section">
+    <h2>🆕 New Releases</h2>
+    <div class="songs-grid">
+      <% newSongs.forEach(song => { %>
+        <%- include('partials/song-card', { song: song }) %>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- YEARLY TOP -->
+  <!-- ===================== -->
+  <section id="yearly" class="song-section">
+    <h2>📅 Yearly Top 100</h2>
+    <div class="songs-grid">
+      <% yearlySongs.forEach(song => { %>
+        <%- include('partials/song-card', { song: song }) %>
+      <% }) %>
+    </div>
+  </section>
+
+</section>
+
+<!-- Main JS -->
+<script src="/js/index.js" defer></script>
+
+<!-- Smooth scroll for nav -->
+<script>
+  document.querySelectorAll('.songs-nav a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.songs-nav a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+      const target = document.querySelector(link.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+
+<style>
+/* ========================= Songs Page Navigation ========================= */
+.songs-nav {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 10px;
+  background-color: #111;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #DFFF00 #222;
+}
+
+/* Scrollbar styling for Webkit browsers */
+.songs-nav::-webkit-scrollbar {
+  height: 6px;
+}
+
+.songs-nav::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 3px;
+}
+
+.songs-nav::-webkit-scrollbar-thumb {
+  background: #DFFF00;
+  border-radius: 3px;
+}
+
+/* Nav links */
+.songs-nav a {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 00.3s ease;
+  border: 1px solid transparent;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.songs-nav a:hover, .songs-nav a.active {
+  background-color: #DFFF00;
+  color: #111;
+  border-color: #DFFF00;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .songs-nav a {
+    padding: 7px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .songs-nav a {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .songs-nav a {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .songs-nav a {
+    padding: 2px 4px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .songs-nav a {
+    padding: 2px 3px;
+    font-size: 0.55rem;
+  }
+}
+
+  
+</style>

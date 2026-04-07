@@ -1,0 +1,56 @@
+/* ===============================
+   ALBUM PAGE WRAPPER
+================================ */
+.ap-header{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+
+/* COVER */
+.ap-cover{
+  width:180px;
+  height:180px;
+  object-fit:cover;
+  border-radius:14px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.5);
+}
+
+/* INFO */
+.ap-info{
+  flex:1;
+  min-width:250px;
+}
+
+.ap-title{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.ap-artist{
+  opacity:0.8;
+  margin-bottom:6px;
+}
+
+.ap-release{
+  font-size:14px;
+  opacity:0.6;
+  margin-bottom:10px;
+}
+
+/* STATS */
+.ap-stats{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.ap-stats span{
+  background:#111;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+}

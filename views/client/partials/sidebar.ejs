@@ -1,0 +1,59 @@
+<aside id="sidebar" class="sidebar">
+
+  <!-- Mobile Header -->
+  <div class="sidebar-header mobile-only">
+    <h2>Menu</h2>
+    <button id="closeSidebar">✕</button>
+  </div>
+
+  <!-- 🔥 LATEST SONGS -->
+  <h3>Latest Songs</h3>
+  <% latestSongs.forEach(song => { %>
+    <a href="/songs/<%= song._id %>" class="sidebar-item">
+      <img src="<%= song.coverImage || '/images/default-song.png' %>" />
+      <div>
+        <span class="title"><%= song.title %></span>
+        <small><%= song.mainArtist?.name || 'Unknown' %></small>
+      </div>
+    </a>
+  <% }) %>
+
+
+  <!-- 🔥 FEATURED ARTISTS -->
+  <h3>Featured Artists</h3>
+  <% featuredArtists.forEach(artist => { %>
+    <a href="/artists/<%= artist._id %>" class="sidebar-item">
+      <img src="<%= artist.image || '/images/default-artist.png' %>" />
+      <div>
+        <span class="title"><%= artist.name %></span>
+      </div>
+    </a>
+  <% }) %>
+
+
+  <!-- 🔥 FEATURED ALBUMS -->
+  <h3>Featured Albums</h3>
+  <% featuredAlbums.forEach(album => { %>
+    <a href="/albums/<%= album._id %>" class="sidebar-item">
+      <img src="<%= album.cover || '/images/default-album.png' %>" />
+      <div>
+        <span class="title"><%= album.title %></span>
+        <small><%= album.artist?.name || '' %></small>
+      </div>
+    </a>
+  <% }) %>
+
+
+  <!-- 🔥 GENRES -->
+  <h3>Genres</h3>
+  <div class="genre-list">
+    <% genres.forEach(genre => { %>
+      <a href="/genres/<%= genre %>" class="genre">
+        <%= genre %>
+      </a>
+    <% }) %>
+  </div>
+
+</aside>
+
+<div id="overlay" class="overlay hidden"></div>

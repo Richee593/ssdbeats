@@ -1,0 +1,7 @@
+node_modules
+.env
+uploads
+seedAdmin.js
+*.log
+.DS_Store
+config

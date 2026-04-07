@@ -1,0 +1,434 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: 'artists', baseUrl }) %>
+
+<%
+/* Helper: Format numbers (1k, 1M) */
+function formatNumber(num) {
+  if (!num) return 0;
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
+  if (num >= 1000) return (num / 1000).toFixed(1) + "K";
+  return num;
+}
+
+/* Artist image fallback */
+const artistImg = artist.image || '/images/default-artist.png';
+%>
+
+<section class="artist-page">
+
+  <!-- HERO -->
+  <section class="hero-section artist-hero">
+    <div class="artist-hero-image">
+      <img src="<%= artistImg %>" alt="<%= artist.name %>" loading="lazy" onerror="this.src='/images/default-artist.png'">
+    </div>
+
+    <div class="artist-hero-info">
+      <h1><%= artist.name %></h1>
+
+      <% if(artist.bio) { %>
+        <p class="artist-bio"><%= artist.bio %></p>
+      <% } %>
+
+      <div class="artist-stats">
+        <div><strong><%= artistSongs.length %></strong><span>Songs</span></div>
+        <div><strong><%= artistAlbums.length %></strong><span>Albums</span></div>
+        <div><strong><%= formatNumber(stats.totalPlays) %></strong><span>Plays</span></div>
+        <div><strong><%= formatNumber(stats.totalDownloads) %></strong><span>Downloads</span></div>
+      </div>
+
+      <!-- SOCIAL LINKS -->
+      <div class="artist-social">
+        <% const social = artist.socialLinks || {}; %>
+        <% if(social.instagram) { %><a href="<%= social.instagram %>" target="_blank">IG</a><% } %>
+        <% if(social.twitter) { %><a href="<%= social.twitter %>" target="_blank">TW</a><% } %>
+        <% if(social.youtube) { %><a href="<%= social.youtube %>" target="_blank">YT</a><% } %>
+        <% if(social.facebook) { %><a href="<%= social.facebook %>" target="_blank">FB</a><% } %>
+        <% if(social.tiktok) { %><a href="<%= social.tiktok %>" target="_blank">TT</a><% } %>
+        <% if(social.audiomack) { %><a href="<%= social.audiomack %>" target="_blank">AM</a><% } %>
+        <% if(social.spotify) { %><a href="<%= social.spotify %>" target="_blank">SP</a><% } %>
+        <% if(social.appleMusic) { %><a href="<%= social.appleMusic %>" target="_blank">AP</a><% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================
+       TOP SONGS
+  ======================= -->
+  <section class="artist-section">
+
+    <div class="songs-grid">
+      <% artistSongs.forEach(song => { 
+           const img = song.coverImage || (song.album && song.album.cover) || '/images/default-song.png';
+           const audio = song.audioFile || '';
+      %>
+
+        <a href="/songs/<%= song._id %>" class="card song">
+          <div class="card-image">
+            <img src="<%= img %>" alt="<%= song.title %>">
+            <% if(audio) { %>
+              <div class="play-overlay">
+                <button class="play-btn" onclick="event.preventDefault(); event.stopPropagation();" 
+                  data-audio="<%= audio %>" 
+                  data-title="<%= song.title %>" 
+                  data-artist="<%= artist.name %>" 
+                  data-cover="<%= img %>">
+                  ▶
+                </button>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="card-info">
+            <p class="card-title"><%= song.title %></p>
+          </div>
+        </a>
+
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- ======================
+       ALBUMS
+  ======================= -->
+  <% if(artistAlbums.length > 0) { %>
+  <section class="artist-section">
+    <div class="section-header">
+      <h2>📀 Albums by <%= artist.name %></h2>
+    </div>
+
+    <div class="albums-grid">
+      <% artistAlbums.forEach(album => { 
+           const cover = album.cover || '/images/default-album.png';
+      %>
+        <a href="/albums/<%= album._id %>" class="album-card">
+          <div class="album-image">
+            <img src="<%= cover %>" alt="<%= album.title %>">
+          </div>
+          <div class="album-info">
+            <p class="album-title"><%= album.title %></p>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  </section>
+  
+  <% } %>
+
+</section>
+
+<style>
+
+/* ===============================
+   ALBUM GRID
+================================ */
+.albums-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+gap:20px;
+}
+
+/* ===============================
+   ALBUM CARD
+================================ */
+.album-card{
+background:#111;
+border-radius:14px;
+overflow:hidden;
+text-decoration:none;
+color:#fff;
+transition:.25s ease;
+display:block;
+}
+
+.album-card:hover{
+transform:translateY(-5px);
+background:#181818;
+}
+
+/* ===============================
+   ALBUM IMAGE WRAPPER
+================================ */
+.album-image{
+position:relative;
+padding:16px;
+}
+
+/* ===============================
+   STACKED ALBUM EFFECT
+================================ */
+.album-image img{
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+border-radius:10px;
+position:relative;
+z-index:2;
+
+/* stacked shadow like albums */
+box-shadow:
+0 18px 35px rgba(0,0,0,0.45),
+8px 8px 0 rgba(0,0,0,0.18),
+16px 16px 0 rgba(0,0,0,0.08);
+}
+
+/* ===============================
+   ALBUM INFO
+================================ */
+.album-info{
+padding:0 14px 16px;
+}
+
+.album-title{
+font-size:14px;
+font-weight:600;
+line-height:1.3;
+}
+
+/* ===============================
+   HOVER EFFECT
+================================ */
+.album-card:hover .album-title{
+color:#DFFF00;
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media(max-width:768px){
+
+.albums-grid{
+grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+gap:16px;
+}
+
+}
+
+@media(max-width:480px){
+
+.albums-grid{
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+.album-title{
+font-size:13px;
+}
+
+}
+
+</style>
+
+<style>
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 20px;
+}
+
+.artist-song-card {
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: .2s ease;
+  text-decoration: none;
+  color: white;
+  position: relative;
+}
+
+.artist-song-card:hover {
+  transform: translateY(-4px);
+  background: #181818;
+}
+
+.artist-song-card.active {
+  outline: 2px solid #DFFF00;
+}
+
+.card-image {
+  position: relative;
+  aspect-ratio: 1/1;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artist-play-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #DFFF00;
+  color: #000;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: .2s ease;
+  z-index: 2;
+}
+
+.artist-song-card:hover .artist-play-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.artist-play-btn.playing {
+  background: #fff;
+}
+
+.card-info {
+  padding: 12px;
+}
+
+.card-title {
+  font-size: 14px;
+}
+
+/* Responsive Design */
+
+/* Large screens (992px and up) */
+@media (min-width: 992px) {
+  .songs-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Medium screens (768px - 991px) */
+@media (max-width: 991px) {
+  .songs-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+}
+
+/* Tablets and small desktops (481px - 767px) */
+@media (max-width: 767px) {
+  .songs-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+  }
+}
+
+/* Mobile devices (341px - 480px) */
+@media (max-width: 480px) {
+  .songs-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
+
+/* Very small screens (max-width: 340px) */
+@media (max-width: 340px) {
+  .songs-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+</style>
+
+<script>
+
+let artistAudio = new Audio();
+let artistIndex = -1;
+let artistPlaying = false;
+
+const artistBtns = document.querySelectorAll(".artist-play-btn");
+const artistCards = document.querySelectorAll(".artist-song-card");
+
+const artistPlaylist = Array.from(artistBtns).map(btn => ({
+id: btn.dataset.id,
+audio: btn.dataset.audio,
+title: btn.dataset.title,
+artist: btn.dataset.artist,
+cover: btn.dataset.cover
+}));
+
+function playArtist(index){
+
+const song = artistPlaylist[index];
+if(!song || !song.audio) return;
+
+// toggle same
+if(artistIndex === index){
+if(artistPlaying){
+artistAudio.pause();
+artistPlaying = false;
+artistBtns[index].innerHTML = "▶";
+artistCards[index].classList.remove("active");
+}else{
+artistAudio.play();
+artistPlaying = true;
+artistBtns[index].innerHTML = "❚❚";
+artistCards[index].classList.add("active");
+}
+return;
+}
+
+// new song
+artistAudio.pause();
+
+artistIndex = index;
+artistAudio.src = song.audio;
+artistAudio.play();
+artistPlaying = true;
+
+// reset UI
+artistCards.forEach(c=>c.classList.remove("active"));
+artistBtns.forEach(b=>b.innerHTML="▶");
+
+// active UI
+artistCards[index].classList.add("active");
+artistBtns[index].innerHTML="❚❚";
+
+// global player
+updateGlobalPlayer(song);
+
+// play count
+submitPlay(song.id);
+
+}
+
+artistBtns.forEach((btn,index)=>{
+btn.addEventListener("click",(e)=>{
+e.preventDefault();
+e.stopPropagation();
+playArtist(index);
+});
+});
+
+// play all
+const playAllBtn = document.querySelector(".play-all-btn");
+if(playAllBtn){
+playAllBtn.addEventListener("click",()=>{
+playArtist(0);
+});
+}
+
+// auto next
+artistAudio.addEventListener("ended",()=>{
+let next = artistIndex + 1;
+if(next >= artistPlaylist.length) next = 0;
+playArtist(next);
+});
+
+function submitPlay(songId){
+fetch(`/songs/${songId}/play`,{
+method:"POST"
+}).catch(()=>{});
+}
+
+</script>
+
+<!-- MAIN JS -->
+<script src="/js/index.js" defer></script>

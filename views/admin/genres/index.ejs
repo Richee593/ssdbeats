@@ -1,0 +1,193 @@
+<% if (success && success.length > 0) { %>
+  <div class="alert alert-success"><%= success[0] %></div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="alert alert-error"><%= error[0] %></div>
+<% } %>
+<%- include("../partials/navbar") %>
+
+<div class="admin-container">
+
+  <div class="admin-header">
+    <h1>Genres</h1>
+
+    <a href="/admin/genres/create" class="btn-primary">
+      + Add Genre
+    </a>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      id="genreSearch" 
+      placeholder="Search genre..."
+    >
+  </div>
+
+  <!-- TABLE -->
+  <table class="admin-table" id="genreTable">
+
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Songs</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% if (genres.length === 0) { %>
+        <tr>
+          <td colspan="5">No genres found</td>
+        </tr>
+      <% } %>
+
+      <% genres.forEach(genre => { %>
+        <tr>
+
+          <!-- NAME -->
+          <td><strong><%= genre.name %></strong></td>
+
+          <!-- SLUG -->
+          <td><%= genre.slug %></td>
+
+          <!-- SONG COUNT -->
+          <td>
+            <span class="badge">
+              <%= genre.songCount || 0 %>
+            </span>
+          </td>
+
+          <!-- CREATED -->
+          <td>
+            <%= genre.createdAt ? genre.createdAt.toDateString() : "-" %>
+          </td>
+
+          <!-- ACTIONS -->
+          <td>
+
+            <a href="/admin/genres/edit/<%= genre._id %>" class="btn-edit">
+              Edit
+            </a>
+
+            <form 
+              action="/admin/genres/delete/<%= genre._id %>" 
+              method="POST" 
+              class="inline-form delete-form"
+            >
+              <button type="submit" class="btn-delete">
+                Delete
+              </button>
+            </form>
+
+          </td>
+
+        </tr>
+      <% }) %>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<!-- SEARCH SCRIPT -->
+<script>
+  const searchInput = document.getElementById("genreSearch");
+  const tableRows = document.querySelectorAll("#genreTable tbody tr");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+
+    tableRows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(query) ? "" : "none";
+    });
+  });
+</script>
+
+<!-- DELETE CONFIRM -->
+<script>
+  document.querySelectorAll(".delete-form").forEach(form => {
+    form.addEventListener("submit", function(e) {
+      const confirmDelete = confirm("Delete this genre?");
+      if (!confirmDelete) e.preventDefault();
+    });
+  });
+</script>
+
+<style>
+
+.admin-container {
+  padding: 20px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-primary {
+  background: #DFFF00;
+  color: black;
+  padding: 8px 14px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.search-box {
+  margin: 15px 0;
+}
+
+.search-box input {
+  width: 300px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.badge {
+  background: #111;
+  color: #DFFF00;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.btn-edit {
+  color: blue;
+  margin-right: 8px;
+}
+
+.btn-delete {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.inline-form {
+  display: inline;
+}
+
+</style>

@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: 'artists', baseUrl }) %>
+
+<section class="artists-page">
+
+  <!-- PAGE TITLE -->
+  <div class="page-header">
+    <h1>Artists</h1>
+  </div>
+
+  <!-- ======================
+       NAV FILTERS
+  ======================= -->
+  <div class="songs-nav">
+
+    <a href="/artists?type=all"
+       class="nav-item <%= type === 'all' ? 'active' : '' %>">
+      🎯 All
+    </a>
+
+    <a href="/artists?type=trending"
+       class="nav-item <%= type === 'trending' ? 'active' : '' %>">
+      🔥 Trending
+    </a>
+
+    <a href="/artists?type=rising"
+       class="nav-item <%= type === 'rising' ? 'active' : '' %>">
+      🚀 Rising
+    </a>
+
+    <a href="/artists?type=new"
+       class="nav-item <%= type === 'new' ? 'active' : '' %>">
+      🆕 New
+    </a>
+
+  </div>
+
+  <!-- ======================
+       ARTISTS GRID
+  ======================= -->
+  <div class="artists-grid">
+
+    <% if (artists.length > 0) { %>
+
+      <% artists.forEach(artist => { %>
+        <%- include('partials/artist-card', { artist, baseUrl }) %>
+      <% }) %>
+
+    <% } else { %>
+
+      <p>No artists found.</p>
+
+    <% } %>
+
+  </div>
+
+  <!-- ======================
+       PAGINATION
+  ======================= -->
+  <div class="pagination">
+
+    <% if (currentPage > 1) { %>
+      <a href="/artists?type=<%= type %>&page=<%= currentPage - 1 %>">← Prev</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+
+      <a href="/artists?type=<%= type %>&page=<%= i %>"
+         class="<%= currentPage === i ? 'active' : '' %>">
+        <%= i %>
+      </a>
+
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+      <a href="/artists?type=<%= type %>&page=<%= currentPage + 1 %>">Next →</a>
+    <% } %>
+
+  </div>
+
+</section>

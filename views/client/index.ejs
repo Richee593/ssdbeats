@@ -1,0 +1,178 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: 'home', baseUrl: baseUrl }) %>
+
+
+<!-- Overlay -->
+<div id="overlay" class="overlay hidden"></div>
+
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebSite",
+ "name": "SSD Beats",
+ "url": "<%= canonicalUrl %>",
+ "potentialAction": {
+   "@type": "SearchAction",
+   "target": "<%= baseUrl %>/search?q={search_term_string}",
+   "query-input": "required name=search_term_string"
+ }
+}
+</script>
+
+
+
+
+<main class="main-content">
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <img src="<%= baseUrl %>/images/hero.png" alt="SSD Beats Hero" class="hero-image">
+  </section>
+
+  <section class="main-sections">
+
+    <!-- New Releases -->
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Newly Added</h2>
+        <a href="/songs/new" class="more-link">More →</a>
+      </div>
+
+      <div class="grid songs-grid">
+        <% latestSongs.forEach(song => { %>
+          <%- include('partials/song-card', { song }) %>
+        <% }) %>
+      </div>
+    </section>
+
+
+
+    <!-- Rising Songs -->
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Rising Songs</h2>
+        <a href="/songs" class="more-link">More →</a>
+      </div>
+
+      <div class="grid songs-grid">
+        <% risingSongs.forEach(song => { %>
+          <%- include('partials/song-card', { song }) %>
+        <% }) %>
+      </div>
+    </section>
+
+
+    <!-- Trending Songs -->
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Trending Songs</h2>
+        <a href="/songs" class="more-link">More →</a>
+      </div>
+
+      <div class="grid songs-grid">
+        <% trendingSongs.forEach(song => { %>
+          <%- include('partials/song-card', { song }) %>
+        <% }) %>
+      </div>
+    </section>
+
+
+    <!-- Trending Artists -->
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Trending Artists</h2>
+        <a href="/artists" class="more-link">More →</a>
+      </div>
+
+      <div class="grid artists-grid">
+        <% trendingArtists.forEach(artist => { %>
+          <%- include('partials/artist-card', { artist }) %>
+        <% }) %>
+      </div>
+    </section>
+    
+    <!-- Trending Albums -->
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Trending Albums</h2>
+        <a href="/albums" class="more-link">More →</a>
+      </div>
+    
+      <div class="grid albums-grid">
+        <% trendingAlbums.forEach(album => { %>
+          <%- include('partials/album-card', { album }) %>
+        <% }) %>
+      </div>
+    </section>
+
+
+    <!-- Weekly Chart -->
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Weekly Chart</h2>
+        <a href="/charts/weekly" class="more-link">More →</a>
+      </div>
+
+      <div class="grid songs-grid">
+        <% weeklySongs.forEach(song => { %>
+          <%- include('partials/song-card', { song }) %>
+        <% }) %>
+      </div>
+    </section>
+
+
+
+    <!-- Genres -->
+    <section class="genres-section">
+      <h3>Browse by Genres</h3>
+      <ul class="genres-list">
+        <% genres.forEach(genre => { %>
+          <li>
+            <a href="/genre/<%= genre._id %>">
+              <%= genre.name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+
+    
+    <!-- Music News -->
+    <section class="news-section">
+      <div class="section-header">
+        <h2>Music News</h2>
+        <a href="/news" class="more-link">More →</a>
+      </div>
+    
+      <div class="news-grid">
+        <% latestNews.forEach(news => { %>
+          <a href="/news/<%= news._id %>" class="news-card">
+    
+            <div class="news-image">
+              <img 
+                src="<%= news.coverImage || baseUrl + '/images/default-news.jpg' %>" 
+                alt="<%= news.title %>"
+                loading="lazy"
+              />
+            </div>
+    
+            <div class="news-content">
+              <h3 class="news-title"><%= news.title %></h3>
+              <p class="news-excerpt">
+                <%= (news.excerpt 
+                      || news.content.replace(/(<([^>]+)>)/gi, "").substring(0, 80)
+                    ) + "..." %>
+              </p>
+            </div>
+    
+          </a>
+        <% }) %>
+      </div>
+    </section>
+
+  </section>
+
+</main>
+
+<script src="/js/index.js" defer></script>

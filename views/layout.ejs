@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic Meta -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title -->
+  <title>
+    <%= typeof page !== 'undefined'
+        ? page.title + ' | SSD Beats'
+        : (typeof title !== 'undefined'
+            ? title + ' | SSD Beats'
+            : 'SSD Beats - Stream & Download Music') %>
+  </title>
+
+  <!-- SEO Meta -->
+  <meta name="description"
+    content="<%= typeof page !== 'undefined'
+        ? page.title
+        : (typeof metaDescription !== 'undefined'
+            ? metaDescription
+            : 'SSD Beats - Discover trending songs, featured artists, albums and latest music news.') %>">
+
+  <meta name="keywords"
+    content="<%= typeof metaKeywords !== 'undefined'
+        ? metaKeywords
+        : 'music, songs, albums, artists, streaming, downloads, SSD Beats, South Sudan music' %>">
+
+  <meta name="author" content="SSD Beats">
+
+  <!-- Canonical URL -->
+  <link rel="canonical"
+    href="<%= typeof currentUrl !== 'undefined'
+        ? currentUrl
+        : (typeof canonicalUrl !== 'undefined'
+            ? canonicalUrl
+            : 'http://localhost:5000') %>">
+
+  <!-- Open Graph -->
+  <meta property="og:title"
+    content="<%= typeof page !== 'undefined'
+        ? page.title
+        : (typeof title !== 'undefined' ? title : 'SSD Beats') %>">
+
+  <meta property="og:description"
+    content="<%= typeof page !== 'undefined'
+        ? page.title
+        : (typeof metaDescription !== 'undefined'
+            ? metaDescription
+            : 'Discover trending songs, artists, albums and music news on SSD Beats.') %>">
+
+  <meta property="og:type"
+    content="<%= typeof page !== 'undefined' ? 'article' : 'website' %>">
+
+  <meta property="og:url"
+    content="<%= typeof currentUrl !== 'undefined'
+        ? currentUrl
+        : 'http://localhost:5000' %>">
+
+  <meta property="og:image"
+    content="<%= typeof ogImage !== 'undefined'
+        ? ogImage
+        : '/images/hero.png' %>">
+
+  <meta property="og:site_name" content="SSD Beats">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="twitter:title"
+    content="<%= typeof page !== 'undefined'
+        ? page.title
+        : (typeof title !== 'undefined' ? title : 'SSD Beats') %>">
+
+  <meta name="twitter:description"
+    content="<%= typeof page !== 'undefined'
+        ? page.title
+        : (typeof metaDescription !== 'undefined'
+            ? metaDescription
+            : 'Discover trending songs, artists and albums on SSD Beats.') %>">
+
+  <meta name="twitter:image"
+    content="<%= typeof ogImage !== 'undefined'
+        ? ogImage
+        : '/images/hero.png' %>">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/player.css">
+  <link rel="stylesheet" href="/css/admin.css">
+
+  <!-- Page-specific CSS -->
+  <% if (typeof pageCss !== 'undefined') { %>
+    <link rel="stylesheet" href="/css/<%= pageCss %>.css">
+  <% } %>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<main>
+  <%- body %>
+</main>
+
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- LEFT -->
+    <div class="footer-brand">
+      <h3>SSD Beats</h3>
+      <p>Discover South Sudan music, artists, albums and latest news.</p>
+    </div>
+
+    <!-- LINKS -->
+    <div class="footer-links">
+      <h4>Pages</h4>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms & Conditions</a>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="footer-social">
+      <h4>Follow</h4>
+      <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+      <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <%= new Date().getFullYear() %> SSD Beats. All rights reserved.</p>
+  </div>
+
+</footer>
+
+
+<!-- SSDBeats Global Player -->
+<div id="ssd-player" class="ssd-player hidden">
+
+  <a id="player-left-link" href="#" class="player-left">
+    <img id="player-cover" src="/images/default-song.png" alt="cover">
+
+    <div class="player-meta">
+      <p id="player-title">No song playing</p>
+      <p id="player-artist">SSD Beats</p>
+    </div>
+  </a>
+
+
+  <div class="player-center">
+
+    <button id="player-prev">⏮</button>
+
+    <button id="player-play">▶</button>
+
+    <button id="player-next">⏭</button>
+
+    <div class="progress-wrap">
+
+      <span id="current-time">0:00</span>
+
+      <input
+        type="range"
+        id="player-progress"
+        value="0"
+        min="0"
+        max="100"
+      >
+
+      <span id="duration">0:00</span>
+
+    </div>
+
+  </div>
+
+  <div class="player-right">
+
+    🔊
+
+    <input
+      type="range"
+      id="player-volume"
+      min="0"
+      max="1"
+      step="0.01"
+      value="1"
+    >
+
+  </div>
+
+  <audio id="ssd-audio"></audio>
+
+</div>
+
+
+<script src="/js/player.js" defer></script>
+</body>
+<script src="/js/index.js" defer></script>
+
+</html>

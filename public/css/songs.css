@@ -1,0 +1,231 @@
+/* =========================
+   Songs Page - SSDBeats
+========================= */
+/* PAGE TITLE */
+.page-header {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #222;
+}
+
+.page-header h2 {
+  font-size: 24px;
+  color: #DFFF00; /* brand color */
+  margin: 0;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-header h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h2 {
+    font-size: 18px;
+  }
+}
+
+
+/* General Page Styling */
+.songs-page {
+  padding: 1rem;
+  background-color: #0a0a0a; /* Dark background for SSDBeats vibe */
+  color: #fff;
+}
+
+
+
+/* Songs Grid */
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+/* Card Styling */
+.card.song {
+  position: relative;
+  background-color: #111;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Card size */
+  width: 100%;            /* full width in its grid column */
+  max-width: 250px;       /* desktop max width */
+  height: auto;           /* height adapts to image + info */
+  margin: 8px auto;         /* center if column is wider */
+}
+
+.card.song:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(223, 255, 0, 0.4);
+}
+
+/* Card Image */
+.card-image {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 aspect ratio */
+  overflow: hidden;
+}
+
+.card-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.card.song:hover img {
+  transform: scale(1.05);
+}
+
+/* Play Overlay */
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card.song:hover .play-overlay {
+  opacity: 1;
+}
+
+.play-btn {
+  background-color: #DFFF00;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Card Info */
+.card-info {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  color: #DFFF00;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+/* =========================
+   Responsive / Mobile
+========================= */
+
+/* =========================
+   Mobile adjustments
+========================= */
+
+@media (max-width: 768px) {
+  .songs-grid {
+    grid-template-columns: repeat(6, 1fr); /* 3 columns */
+    gap: 0.25rem; /* smaller gap */
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+  }
+  
+  .card { 
+    width: 95px; 
+    height: 188px;
+  }
+  .card-info {
+    padding: 0.2rem 0.3rem;
+  }
+  .card-image {
+    width: 100%;
+    height: 135px;
+  }  
+  .card-title {
+    font-weight: bold;
+    font-size: 0.7rem;
+    margin: 0;
+  }
+  
+
+  .card-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .play-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .card-image {
+    padding-top: 100%; /* square cards */
+  }
+}
+
+@media (max-width: 480px) {
+  .card.song {
+    
+    width: 100%;            /* full width in its grid column */
+    max-width: 140px;       /* desktop max width */
+    height: 146px;
+    
+    margin: 4px auto;         /* center if column is wider */
+  }
+  .songs-page h1 {
+    font-size: 1.2rem;
+  }
+  .songs-grid {
+    grid-template-columns: repeat(4, 1fr); /* keep 3 columns even on small phones */
+    gap: 0.3rem;
+  }
+
+  .card-title {
+    font-size: 0.6rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.55rem;
+  }
+
+  .play-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+}

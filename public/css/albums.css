@@ -1,0 +1,237 @@
+/* ===============================
+   ALBUM CARD
+================================ */
+.album-card {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  width: 100%;
+  max-width: 180px;
+  margin: 0 auto;
+  transition: 0.25s ease;
+}
+
+.album-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ===============================
+   STACKED COVERS
+================================ */
+.album-stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 8px;
+}
+
+/* main cover */
+.album-cover.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  z-index: 2;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+  transition: 0.25s ease;
+}
+
+/* back cover */
+.album-cover.back {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  z-index: 1;
+  opacity: 0.35;
+  transform: scale(0.96);
+  transition: 0.25s ease;
+}
+
+/* hover effect */
+.album-card:hover .album-cover.main {
+  transform: rotate(-2deg) scale(1.02);
+}
+
+.album-card:hover .album-cover.back {
+  transform: rotate(3deg) scale(0.96);
+}
+
+/* ===============================
+   INFO
+================================ */
+.album-info {
+  padding: 2px 4px;
+}
+
+.album-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album-artist {
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* large desktop */
+@media (min-width: 1400px) {
+  .album-card {
+    max-width: 200px;
+  }
+}
+
+/* tablet */
+@media (max-width: 900px) {
+  .album-card {
+    max-width: 160px;
+  }
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .album-card {
+    max-width: 140px;
+  }
+
+  .album-title {
+    font-size: 13px;
+  }
+
+  .album-artist {
+    font-size: 11px;
+  }
+}
+
+/* small mobile */
+@media (max-width: 420px) {
+  .album-card {
+    max-width: 120px;
+  }
+}
+
+/* very small */
+@media (max-width: 360px) {
+  .album-card {
+    max-width: 110px;
+  }
+}
+
+
+
+
+
+/* =========================
+   MAIN SECTION WRAPPER
+========================= */
+.main-sections {
+  padding: 16px;
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0 10px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* =========================
+   SLIDER CONTAINER
+========================= */
+.slider-container {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* hide scrollbar (mobile clean look) */
+.slider-container::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-container {
+  scrollbar-width: none;
+}
+
+/* =========================
+   SLIDER TRACK
+========================= */
+.slider-track {
+  display: flex;
+  gap: 12px;
+  padding: 6px 2px 16px;
+  width: max-content;
+}
+
+/* =========================
+   ALBUM CARD INSIDE SLIDER
+========================= */
+.slider-track .album-card {
+  flex: 0 0 auto;
+  width: 120px;
+}
+
+/* =========================
+   MOBILE (DEFAULT)
+   3 visible cards
+========================= */
+@media (max-width: 480px) {
+  .slider-track .album-card {
+    width: 110px;
+  }
+
+  .section-header h2 {
+    font-size: 16px;
+  }
+}
+
+/* =========================
+   TABLET
+========================= */
+@media (min-width: 481px) and (max-width: 768px) {
+  .slider-track .album-card {
+    width: 140px;
+  }
+}
+
+/* =========================
+   DESKTOP
+========================= */
+@media (min-width: 769px) {
+  .slider-track .album-card {
+    width: 180px;
+  }
+
+  .main-sections {
+    padding: 24px 40px;
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+  }
+}

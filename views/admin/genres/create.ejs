@@ -1,0 +1,163 @@
+<%- include("../partials/navbar") %>
+
+<div class="admin-container">
+
+  <h1>Add New Genre</h1>
+
+  <% if (locals.success) { %>
+    <div class="alert alert-success"><%= success %></div>
+  <% } %>
+
+  <% if (locals.error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <form action="/admin/genres/create" method="POST">
+    <div class="form-group">
+      <label>Genre Name</label>
+      <input 
+        type="text" 
+        name="name" 
+        id="genreName" 
+        required
+        placeholder="Enter genre name"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Slug Preview</label>
+      <input type="text" id="slugPreview" readonly>
+    </div>
+
+    <button type="submit" class="btn-primary">Create Genre</button>
+  </form>
+
+</div>
+
+<script>
+  // AUTO-GENERATE SLUG
+  const nameInput = document.getElementById('genreName');
+  const slugInput = document.getElementById('slugPreview');
+
+  nameInput.addEventListener('input', () => {
+    const slug = nameInput.value
+      .toLowerCase()
+      .replace(/ /g, '-')
+      .replace(/[^\w-]+/g, '');
+    slugInput.value = slug;
+  });
+
+  // AUTO-HIDE FLASH MESSAGES
+  setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
+  }, 3000);
+</script>
+
+<style>
+  /* Container */
+  .admin-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+  }
+
+  /* Form */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[readonly] {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    background-color: #DFFF00; /* SSD Beats brand color */
+    color: #000;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background-color: #c8e600;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  table th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+  }
+
+  /* Alerts */
+  .alert {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .alert-success {
+    background-color: #DFFF00; /* brand color as success highlight */
+    color: #000;
+  }
+
+  .alert-error {
+    background-color: #ff4d4f;
+    color: #fff;
+  }
+
+  /* Inline form for delete button */
+  form.inline {
+    display: inline-block;
+    margin: 0;
+  }
+
+  form.inline button {
+    background-color: #DFFF00; /* brand color for delete */
+    color: #000;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  form.inline button:hover {
+    background-color: #c8e600;
+  }
+</style>

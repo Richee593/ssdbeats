@@ -1,0 +1,186 @@
+<header class="header">
+
+  <!-- LEFT SIDE -->
+  <div class="header-left">
+    <button id="hamburger" class="hamburger mobile-only">
+      ☰
+    </button>
+
+    <div class="logo">
+      <a href="/">
+        <img src="/images/logo.png" alt="SSDBEATS Logo">
+      </a>
+    </div>
+  </div>
+  
+  
+  
+  <div class="content-wrapper">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+  
+      <!-- HEADER -->
+      <div class="sidebar-header">
+        <h2>SSD Beats</h2>
+        <button id="closeSidebar" class="close-btn">✕</button>
+      </div>
+  
+      <div class="sidebar-body">
+  
+        <!-- MAIN NAV -->
+        <div class="sidebar-section">
+          <h4>Browse</h4>
+  
+          <a href="/">Home</a>
+          <a href="/songs">Songs</a>
+          <a href="/albums">Albums</a>
+          <a href="/artists">Artists</a>
+          <a href="/news">News</a>
+        </div>
+  
+        <!-- DISCOVER -->
+        <div class="sidebar-section">
+          <h4>Discover</h4>
+  
+          <a href="/songs?filter=trending">🔥 Trending</a>
+          <a href="/songs?filter=rising">🚀 Rising</a>
+          <a href="/songs/new">🆕 New Releases</a>
+        </div>
+  
+        <!-- GENRES -->
+        <div class="sidebar-section">
+          <h4>Genres</h4>
+  
+          <% genres.slice(0, 8).forEach(genre => { %>
+            <a href="/genre/<%= genre._id %>" class="genre">
+              <%= genre.name %>
+            </a>
+          <% }) %>
+  
+          <a href="/genres" class="view-all">View All →</a>
+        </div>
+  
+        <!-- FEATURED -->
+        <div class="sidebar-section">
+          <h4>Featured</h4>
+  
+          <% trendingArtists.slice(0,5).forEach(artist => { %>
+            <a href="/artists/<%= artist._id %>">⭐ <%= artist.name %></a>
+          <% }) %>
+  
+          <% featuredAlbums.slice(0,5).forEach(album => { %>
+            <a href="/albums/<%= album._id %>">💿 <%= album.title %></a>
+          <% }) %>
+        </div>
+  
+        <!-- FOOTER -->
+        <div class="sidebar-section sidebar-footer">
+          <a href="/about">ℹ️ About</a>
+          <a href="/contact">📩 Contact</a>
+        </div>
+  
+      </div>
+  
+    </aside>
+  
+  </div>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay hidden"></div>
+
+
+
+  <!-- CENTER (Desktop Nav Links) -->
+  <nav class="nav-links desktop-only">
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/help">Help/FAQ</a>
+  </nav>
+  
+  <!-- RIGHT SIDE -->
+  <div class="header-right">
+    <button id="dotMenuBtn" class="dot-menu-btn">
+      ⋮
+    </button>
+  
+    <div id="dotDropdown" class="dot-dropdown hidden">
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/help">Help/FAQ</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+  </div>
+
+<aside id="sidebar" class="sidebar mobile-only">
+  
+  <div class="sidebar-header">
+    <h2>SSD Beats</h2>
+    <button id="closeSidebar">✖</button>
+  </div>
+
+  <div class="sidebar-section">
+    <h4>Browse</h4>
+    <a href="/">Home</a>
+    <a href="/songs">Songs</a>
+    <a href="/albums">Albums</a>
+    <a href="/artists">Artists</a>
+    <a href="/news">News</a>
+  </div>
+
+  <div class="sidebar-section">
+    <h4>Discover</h4>
+    <a href="/songs?filter=trending">🔥 Trending</a>
+    <a href="/songs?filter=rising">🚀 Rising</a>
+    <a href="/songs/new">🆕 New Releases</a>
+  </div>
+
+</aside>
+
+<div id="overlay" class="overlay hidden"></div>
+</header>
+
+<!-- Search Section -->
+<section class="search-section">
+  <form action="/search" method="GET" class="search-form">
+    
+    <div class="search-wrapper">
+      <button type="submit" class="search-btn">
+        🔍
+      </button>
+
+      <input 
+        type="text" 
+        name="q"
+        placeholder="Search songs, artists, albums..."
+        required
+      >
+    </div>
+
+  </form>
+</section>
+
+<style>
+.sidebar{
+  position: fixed;
+  left: -100%;
+  top: 0;
+  height: 100%;
+  width: 260px;
+  transition: .3s ease;
+  z-index: 1000;
+}
+
+
+
+.sidebar.active{
+  left: 0;
+}
+
+@media(min-width: 992px){
+  .sidebar{
+    left: 0;
+    position: relative;
+  }
+}  
+</style>

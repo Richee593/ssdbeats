@@ -1,0 +1,149 @@
+<% if (success && success.length > 0) { %>
+  <div class="alert alert-success"><%= success[0] %></div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="alert alert-error"><%= error[0] %></div>
+<% } %>
+
+<%- include("../partials/navbar") %>
+
+<div class="admin-container">
+
+  <div class="admin-header">
+    <h1>News</h1>
+
+    <a href="/admin/news/create" class="btn-primary">
+      + Create News
+    </a>
+  </div>
+
+  <!-- SEARCH & FILTER -->
+  <div class="admin-filters" style="margin-bottom:15px; display:flex; gap:10px;">
+    <input type="text" id="newsSearch" placeholder="Search news..." style="flex:1; padding:6px; border-radius:5px; border:1px solid #ccc;">
+    <select id="categoryFilter" style="padding:6px; border-radius:5px; border:1px solid #ccc;">
+      <option value="">All Categories</option>
+      <% 
+        const categories = [...new Set(news.map(n => n.category).filter(c => c))]; 
+        categories.forEach(c => { %>
+          <option value="<%= c %>"><%= c %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="newsTableBody">
+      <% news.forEach(item => { %>
+        <tr>
+          <td>
+            <img src="<%= item.coverImage ? item.coverImage : '/images/default-song.png' %>" width="60">
+          </td>
+          <td class="news-title"><%= item.title %></td>
+          <td class="news-category"><%= item.category %></td>
+          <td><%= item.author %></td>
+          <td><%= new Date(item.createdAt).toLocaleDateString() %></td>
+          <td>
+            <a href="/admin/news/edit/<%= item._id %>" class="btn-edit">Edit</a>
+            <form action="/admin/news/delete/<%= item._id %>" method="POST" style="display:inline;">
+              <button class="btn-delete" onclick="return confirm('Delete this news?')">
+                Delete
+              </button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+</div>
+
+
+<script>
+const newsRows = [...document.querySelectorAll("#newsTableBody tr")];
+const newsSearch = document.getElementById("newsSearch");
+const categoryFilter = document.getElementById("categoryFilter");
+
+function filterNews() {
+  const search = newsSearch.value.toLowerCase();
+  const category = categoryFilter.value;
+
+  newsRows.forEach(row => {
+    const title = row.querySelector(".news-title").textContent.toLowerCase();
+    const rowCategory = row.querySelector(".news-category").textContent;
+
+    if(title.includes(search) && (category === "" || rowCategory === category)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+
+newsSearch.addEventListener("input", filterNews);
+categoryFilter.addEventListener("change", filterNews);
+</script>
+
+
+
+<style>
+.admin-container {
+  padding:20px;
+}
+
+.admin-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.admin-table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+.admin-table th, .admin-table td {
+  border:1px solid #ccc;
+  padding:10px;
+  text-align:left;
+}
+
+.admin-table th {
+  background:#f2f2f2;
+}
+
+.btn-primary, .btn-edit, .btn-delete {
+  padding:6px 12px;
+  border-radius:5px;
+  text-decoration:none;
+  color:white;
+  font-weight:bold;
+}
+
+.btn-primary {
+  background:#DFFF00;
+  color:#111;
+}
+
+.btn-edit {
+  background:#00aaff;
+}
+
+.btn-delete {
+  background:#ff4444;
+}
+
+.admin-filters input, .admin-filters select {
+  outline:none;
+}
+</style>
