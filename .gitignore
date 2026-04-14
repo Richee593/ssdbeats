@@ -4,4 +4,3 @@ uploads
 seedAdmin.js
 *.log
 .DS_Store
-config

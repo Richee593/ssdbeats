@@ -135,7 +135,7 @@ router.get("/songs", async (req, res) => {
     const trendingSongs = [...allSongs]
       .map(s => ({ ...s, score: calcTrending(s) }))
       .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
+      .slice(0, 20);
 
 
     // =========================
@@ -144,7 +144,7 @@ router.get("/songs", async (req, res) => {
     const risingSongs = [...allSongs]
       .map(s => ({ ...s, score: calcRising(s) }))
       .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
+      .slice(0, 20);
 
 
     // =========================
@@ -157,7 +157,7 @@ router.get("/songs", async (req, res) => {
       })
       .map(s => ({ ...s, score: calcTrending(s) }))
       .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
+      .slice(0, 16);
 
 
     // =========================
@@ -165,7 +165,7 @@ router.get("/songs", async (req, res) => {
     // =========================
     const newSongs = [...allSongs]
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 10);
+      .slice(0, 20);
 
 
     // =========================
@@ -267,7 +267,7 @@ router.get('/artists', async (req, res) => {
     const type = req.query.type || "all"; // all, trending, rising, new
     const page = parseInt(req.query.page) || 1;
 
-    const limit = 12;
+    const limit = 18;
     const skip = (page - 1) * limit;
 
     let query = {};
@@ -641,13 +641,15 @@ router.get('/albums/:id', async (req, res) => {
 router.get("/", clientController.homePage);
 router.get("/genre/:id", clientController.genrePage);
 
+
+// Single news article
+router.get("/news/:slug", clientController.singleNews);
 // News page
 router.get("/news", clientController.newsPage);
 
 router.get("/tag/:tag", clientController.tagPage);
 
-// Single news article
-router.get("/news/:slug", clientController.singleNews);
+
 
 router.get("/genres", clientController.genresPage);
 

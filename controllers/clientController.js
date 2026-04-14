@@ -15,7 +15,7 @@ exports.homePage = async (req, res) => {
       .populate("artist")
       .populate("album")
       .sort({ createdAt: -1 })
-      .limit(10);
+      .limit(15);
 
 
     // 🔥 Trending Songs (overall trending)
@@ -26,7 +26,7 @@ exports.homePage = async (req, res) => {
     .populate("artist")
     .populate("album")
     .sort({ trendingScore: -1 })
-    .limit(10);
+    .limit(15);
     
 
 
@@ -35,7 +35,7 @@ exports.homePage = async (req, res) => {
       .populate("artist")
       .populate("album")
       .sort({ weeklyScore: -1, trendingScore: -1 })
-      .limit(10);
+      .limit(12);
 
 
     // 🏆 Weekly Chart
@@ -43,25 +43,54 @@ exports.homePage = async (req, res) => {
       .populate("artist")
       .populate("album")
       .sort({ weeklyScore: -1 })
-      .limit(10);
+      .limit(12);
 
 
     // ⭐ Trending Artists
     const trendingArtists = await Artist.find()
       .sort({ trendingScore: -1 })
-      .limit(6);
+      .limit(12);
 
 
     // 💿 Trending Albums
     const trendingAlbums = await Album.find()
       .sort({ trendingScore: -1 })
-      .limit(6);
+      .limit(9);
 
 
-    // 🎧 Genres
-    const genres = await Genre.find()
-      .sort({ name: 1 })
-      .limit(12);
+
+    
+    // Fetch Genres with Most Songs and Plays
+    const genres = await Genre.aggregate([
+      {
+        $lookup: {
+          from: "songs",          // Reference to the Song collection
+          localField: "_id",      // The genre's _id field
+          foreignField: "genre",  // The genre field in the Song collection
+          as: "songs"            // Store the resulting songs in a new "songs" array
+        }
+      },
+      {
+        $addFields: {
+          totalSongs: { $size: "$songs" },  // Count how many songs belong to this genre
+          totalPlays: { 
+            $sum: "$songs.plays"  // Sum up the "plays" field of all the songs in this genre
+          }
+        }
+      },
+      {
+        $sort: {
+          totalSongs: -1,    // Sort by the number of songs in descending order
+          totalPlays: -1     // Sort by the number of plays in descending order if tied
+        }
+      },
+      {
+        $limit: 1  // Get the genre with the most songs (and most plays)
+      }
+    ]);
+
+    // Fetch the top genre data
+    const topGenre = genres.length > 0 ? genres[0] : null;
 
 
     // 📰 Music News
@@ -83,7 +112,7 @@ exports.homePage = async (req, res) => {
       trendingArtists,
       trendingAlbums,
 
-      genres,
+      topGenre,  // Add topGenre to the template to display
       latestNews,
 
       pageCss: "home",
