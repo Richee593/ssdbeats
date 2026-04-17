@@ -41,7 +41,7 @@
       <div class="song-stats">
         <span>▶ Plays: <%= song.playCount %></span>
         <span>⬇ Downloads: <%= song.downloadCount %></span>
-        <span>🔗 Shares: <%= song.shareCount %></span>
+        <!--<span>🔗 Shares: <%= song.shareCount %></span> -->
         <span>📊 Weekly Score: <%= song.weeklyScore %></span>
         <span>📅 Monthly Score: <%= song.monthlyScore %></span>
         <span>🗓 Yearly Score: <%= song.yearlyScore %></span>
@@ -66,17 +66,19 @@
         <% if(song.audioFile) { %>
           <a href="/api/player/download/<%= song._id %>" class="download-btn">⬇ Download</a>
         <% } %>
-
+        
+        <!--
         <button class="song-share-btn" data-id="<%= song._id %>">
           Share
         </button>
-
+        
         <div class="share-options hidden" id="share-options-<%= song._id %>">
           <a href="https://www.facebook.com/sharer/sharer.php?u=<%= baseUrl %>/songs/<%= song._id %>" target="_blank">Facebook</a>
           <a href="https://twitter.com/intent/tweet?url=<%= baseUrl %>/songs/<%= song._id %>" target="_blank">Twitter</a>
           <a href="https://t.me/share/url?url=<%= baseUrl %>/songs/<%= song._id %>" target="_blank">Telegram</a>
           <button class="copy-link-btn" data-link="<%= baseUrl %>/songs/<%= song._id %>">Copy Link</button>
         </div>
+        -->
       </div>
 
     </div>
