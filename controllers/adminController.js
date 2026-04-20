@@ -1,3 +1,4 @@
+
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const Admin = require("../models/Admin");
@@ -17,9 +18,7 @@ exports.loginPage = (req, res) => {
   }
 
   res.render("admin/login", {
-    title: "Admin Login",
-    error: req.flash("error"),
-    success: req.flash("success")
+    title: "Admin Login"
   });
 };
 
@@ -37,41 +36,75 @@ exports.loginValidation = [
 exports.login = async (req, res) => {
   try {
 
-    // 1️⃣ Validate input
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       req.flash("error", errors.array()[0].msg);
       return res.redirect("/admin/login");
     }
 
-    // 2️⃣ Get input
     const { email, password } = req.body;
 
-    // 3️⃣ Check user
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({
+      email: email.toLowerCase()
+    });
+    
+    
 
+    // ❌ user not found
     if (!admin) {
       req.flash("error", "Invalid email or password");
       return res.redirect("/admin/login");
     }
 
-    // 4️⃣ Compare password
+    // 🔒 check if account is locked
+    if (admin.lockUntil && admin.lockUntil > Date.now()) {
+      req.flash("error", "Account locked. Try again later.");
+      return res.redirect("/admin/login");
+    }
+
+    // 🔑 check password
     const isMatch = await bcrypt.compare(password, admin.password);
 
     if (!isMatch) {
+
+      admin.loginAttempts += 1;
+
+      // lock after 5 failed attempts
+      if (admin.loginAttempts >= 5) {
+        admin.lockUntil = Date.now() + 15 * 60 * 1000; // 15 min
+        admin.loginAttempts = 0;
+      }
+
+      await admin.save();
+
       req.flash("error", "Invalid email or password");
       return res.redirect("/admin/login");
     }
 
-    // 5️⃣ Create session
-    req.session.admin = {
-      id: admin._id,
-      email: admin.email,
-    };
+    // ✅ reset login attempts on success
+    admin.loginAttempts = 0;
+    admin.lockUntil = null;
+    await admin.save();
 
-    req.flash("success", "Welcome back 👋");
+    // 🔐 REGENERATE SESSION (VERY IMPORTANT)
+    req.session.regenerate((err) => {
+      if (err) {
+        console.error(err);
+        req.flash("error", "Login error");
+        return res.redirect("/admin/login");
+      }
 
-    res.redirect("/admin/dashboard");
+      // 🧠 secure session
+      req.session.admin = {
+        id: admin._id,
+        email: admin.email,
+        role: admin.role || "admin",
+        loginTime: Date.now() // required for timeout
+      };
+
+      req.flash("success", "Welcome back 👋");
+      res.redirect("/admin/dashboard");
+    });
 
   } catch (err) {
     console.error(err);
@@ -79,9 +112,6 @@ exports.login = async (req, res) => {
     res.redirect("/admin/login");
   }
 };
-
-
-
 
 // =========================
 // DASHBOARD

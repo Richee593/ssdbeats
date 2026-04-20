@@ -8,19 +8,19 @@
 
   <!-- NAVIGATION TABS -->
   <div class="songs-nav">
-    <a href="#all-songs" class="active">🎯 All Songs</a>
-    <a href="#trending">🔥 Trending</a>
-    <a href="#rising">🚀 Rising</a>
-    <a href="#weekly">🏆 Weekly</a>
-    <a href="#new">🆕 New</a>
-    <a href="#yearly">📅 Yearly</a>
+    <a href="#all-songs" class="active">All Songs</a>
+    <a href="#trending">Trending</a>
+    <a href="#rising">Rising</a>
+    <a href="#weekly">Weekly</a>
+    <a href="#new">New</a>
+    <a href="#yearly">Yearly</a>
   </div>
 
   <!-- ===================== -->
   <!-- ALL SONGS (WITH PAGINATION) -->
   <!-- ===================== -->
   <section id="all-songs" class="song-section">
-    <h2>🎯 All Songs</h2>
+    <h2>All Songs</h2>
 
     <div class="songs-grid">
       <% songs.forEach(song => { %>
@@ -48,7 +48,7 @@
   <!-- TRENDING -->
   <!-- ===================== -->
   <section id="trending" class="song-section">
-    <h2>🔥 Trending Now</h2>
+    <h2>Trending Now</h2>
     <div class="songs-grid">
       <% trendingSongs.forEach(song => { %>
         <%- include('partials/song-card', { song: song }) %>
@@ -60,7 +60,7 @@
   <!-- RISING -->
   <!-- ===================== -->
   <section id="rising" class="song-section">
-    <h2>🚀 Rising Fast</h2>
+    <h2>Rising Fast</h2>
     <div class="songs-grid">
       <% risingSongs.forEach(song => { %>
         <%- include('partials/song-card', { song: song }) %>
@@ -72,7 +72,7 @@
   <!-- WEEKLY -->
   <!-- ===================== -->
   <section id="weekly" class="song-section">
-    <h2>🏆 Weekly Top 10</h2>
+    <h2>Weekly Top 10</h2>
     <div class="songs-grid">
       <% weeklySongs.forEach(song => { %>
         <%- include('partials/song-card', { song: song }) %>
@@ -84,7 +84,7 @@
   <!-- NEW RELEASES -->
   <!-- ===================== -->
   <section id="new" class="song-section">
-    <h2>🆕 New Releases</h2>
+    <h2>Newly Added</h2>
     <div class="songs-grid">
       <% newSongs.forEach(song => { %>
         <%- include('partials/song-card', { song: song }) %>
@@ -95,16 +95,28 @@
   <!-- ===================== -->
   <!-- YEARLY TOP -->
   <!-- ===================== -->
+  <!-- Section for displaying the Yearly Top 100 songs -->
   <section id="yearly" class="song-section">
-    <h2>📅 Yearly Top 100</h2>
+    <h2>Yearly Top 100</h2>
+    
+    <!-- Container for the songs grid -->
     <div class="songs-grid">
+      
+      <!-- Loop through each song in the yearlySongs array -->
       <% yearlySongs.forEach(song => { %>
+      
+        <!-- Include the song card partial for each song -->
         <%- include('partials/song-card', { song: song }) %>
+      
       <% }) %>
     </div>
   </section>
 
 </section>
+
+
+<%- include('partials/navbar', { page: 'songs' }) %>
+
 
 <!-- Main JS -->
 <script src="/js/index.js" defer></script>

@@ -15,22 +15,22 @@
 
     <a href="/artists?type=all"
        class="nav-item <%= type === 'all' ? 'active' : '' %>">
-      🎯 All
+      All
     </a>
 
     <a href="/artists?type=trending"
        class="nav-item <%= type === 'trending' ? 'active' : '' %>">
-      🔥 Trending
+      Trending
     </a>
 
     <a href="/artists?type=rising"
        class="nav-item <%= type === 'rising' ? 'active' : '' %>">
-      🚀 Rising
+      Rising
     </a>
 
     <a href="/artists?type=new"
        class="nav-item <%= type === 'new' ? 'active' : '' %>">
-      🆕 New
+      New
     </a>
 
   </div>
@@ -79,3 +79,7 @@
   </div>
 
 </section>
+
+
+
+<%- include('partials/navbar', { page: 'artists', baseUrl }) %>

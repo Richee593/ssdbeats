@@ -1,103 +1,170 @@
-<div class="login-container">
+<div class="login-wrapper">
 
-  <form method="POST" action="/admin/login" class="login-card">
+  <div class="login-box">
 
-    <h2>Admin Login</h2>
+    <h1 class="login-title">Admin Only!</h1>
 
+    <!-- FLASH MESSAGES -->
     <% if (error && error.length > 0) { %>
-      <div class="alert error"><%= error %></div>
+      <div class="alert alert-error"><%= error[0] %></div>
     <% } %>
 
     <% if (success && success.length > 0) { %>
-      <div class="alert success"><%= success %></div>
+      <div class="alert alert-success"><%= success[0] %></div>
     <% } %>
 
-    <input type="email" name="email" placeholder="Email" required>
+    <!-- LOGIN FORM -->
+    <form action="/admin/login" method="POST" class="login-form">
 
-    <input type="password" name="password" placeholder="Password" required>
+      <div class="form-group">
+        <label>1</label>
+        <input 
+          type="email" 
+          name="email" 
+          required
+        >
+      </div>
 
-    <button type="submit">Login</button>
+      <div class="form-group password-group">
+        <label>2</label>
 
-  </form>
+        <div class="password-wrapper">
+          <input 
+            type="password" 
+            name="password" 
+            id="password"
+            required
+          >
+
+          <span class="toggle-pass" onclick="togglePassword()">
+            Show
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">
+        @
+      </button>
+
+    </form>
+
+  </div>
 
 </div>
 
+<script>
+  function togglePassword() {
+    const input = document.getElementById("password");
+    const toggle = document.querySelector(".toggle-pass");
+
+    if (input.type === "password") {
+      input.type = "text";
+      toggle.textContent = "Hide";
+    } else {
+      input.type = "password";
+      toggle.textContent = "Show";
+    }
+  }
+</script>
+
+
 <style>
 
-body{
-  background:#0f0f0f;
-  color:white;
-  font-family:sans-serif;
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f0f0f;
+  padding: 20px;
 }
 
-.login-container{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.login-box {
+  width: 100%;
+  max-width: 380px;
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.login-card{
-  background:#1a1a1a;
-  padding:40px;
-  border-radius:12px;
-  width:320px;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+.login-title {
+  text-align: center;
+  color: #DFFF00;
+  margin-bottom: 20px;
 }
 
-.login-card h2{
-  text-align:center;
+.login-form .form-group {
+  margin-bottom: 15px;
 }
 
-.login-card input{
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  background:#222;
-  color:white;
+.login-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
 }
 
-.login-card input:focus{
-  outline:none;
-  border:1px solid #DFFF00;
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #2a2a2a;
+  color: #fff;
 }
 
-.login-card button{
-  background:#DFFF00;
-  border:none;
-  padding:10px;
-  font-weight:bold;
-  cursor:pointer;
-  border-radius:6px;
+.password-wrapper {
+  position: relative;
 }
 
-.login-card button:hover{
-  opacity:0.9;
+.toggle-pass {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #DFFF00;
+  cursor: pointer;
 }
 
-.alert{
-  padding:8px;
-  border-radius:5px;
-  font-size:14px;
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #DFFF00;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.alert.error{
-  background:#ff4d4d;
+.login-btn:hover {
+  opacity: 0.9;
 }
 
-.alert.success{
-  background:#28a745;
+/* Alerts */
+.alert {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
+.alert-error {
+  background: #ff3b3b;
+  color: #fff;
+}
+
+.alert-success {
+  background: #2ecc71;
+  color: #fff;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 20px;
+  }
+}
+  
 </style>
-
-<script>
-setTimeout(() => {
-  document.querySelectorAll('.alert').forEach(el => {
-    el.style.display = 'none';
-  });
-}, 3000);
-</script>

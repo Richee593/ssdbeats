@@ -16,9 +16,8 @@ const songController = require("../controllers/songController");
 const newsController = require("../controllers/newsController");
 const pageController = require("../controllers/pageController");
 
-
 // Middleware
-const { requireAdmin } = require("../middleware/auth");
+const { requireAdmin, adminSessionTimeout } = require("../middleware/auth");
 
 const Page = require("../models/Page");
 
@@ -40,12 +39,11 @@ router.post(
   adminController.login
 );
 
-
 // =========================
 // 🔒 PROTECT EVERYTHING BELOW
 // =========================
 router.use(requireAdmin);
-
+router.use(adminSessionTimeout);
 
 // =========================
 // DASHBOARD
