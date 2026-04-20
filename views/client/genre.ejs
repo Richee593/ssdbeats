@@ -1,6 +1,22 @@
 <%- include('partials/header') %>
 
 
+<!-- Adsterra Mobile Banner -->
+<div style="text-align:center; margin:10px 0;">
+    <script>
+      atOptions = {
+        'key' : '0ed7f09a2d4d7b40335d29840f65ed9e',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/0ed7f09a2d4d7b40335d29840f65ed9e/invoke.js"></script>
+    </div>
+
+
+
 <section class="songs-page">
 
   <!-- HEADER -->
@@ -11,17 +27,17 @@
 
   <!-- NAV -->
   <div class="songs-nav">
-    <a href="#all" class="active">🎯 All</a>
-    <a href="#trending">🔥 Trending</a>
-    <a href="#rising">🚀 Rising</a>
-    <a href="#new">🆕 New</a>
+    <a href="#all" class="active">All</a>
+    <a href="#trending">Trending</a>
+    <a href="#rising">Rising</a>
+    <a href="#new">New</a>
   </div>
 
   <!-- ================= -->
   <!-- ALL SONGS -->
   <!-- ================= -->
   <section id="all" class="song-section">
-    <h2>🎯 All Songs</h2>
+    <h2>All Songs</h2>
 
     <div class="songs-grid">
       <% songs.forEach(song => { %>
@@ -51,7 +67,7 @@
   <!-- TRENDING -->
   <!-- ================= -->
   <section id="trending" class="song-section">
-    <h2>🔥 Trending in <%= genre.name %></h2>
+    <h2>Trending in <%= genre.name %></h2>
 
     <div class="songs-grid">
       <% trendingSongs.forEach(song => { %>
@@ -64,7 +80,7 @@
   <!-- RISING -->
   <!-- ================= -->
   <section id="rising" class="song-section">
-    <h2>🚀 Rising in <%= genre.name %></h2>
+    <h2>Rising in <%= genre.name %></h2>
 
     <div class="songs-grid">
       <% risingSongs.forEach(song => { %>
@@ -77,7 +93,7 @@
   <!-- NEW -->
   <!-- ================= -->
   <section id="new" class="song-section">
-    <h2>🆕 New in <%= genre.name %></h2>
+    <h2>New in <%= genre.name %></h2>
 
     <div class="songs-grid">
       <% newSongs.forEach(song => { %>
@@ -104,6 +120,25 @@
     });
   });
 </script>
+
+<!-- Adsterra Mobile Banner -->
+<div style="text-align:center; margin:10px 0;">
+    <script>
+      atOptions = {
+        'key' : '0ed7f09a2d4d7b40335d29840f65ed9e',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/0ed7f09a2d4d7b40335d29840f65ed9e/invoke.js"></script>
+    </div>
+
+
+
+
+
 
 <style>
 /* ========================= SONGS PAGE ========================= */
